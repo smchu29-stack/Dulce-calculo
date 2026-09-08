@@ -4063,6 +4063,14 @@
     );
 
   </script>
-
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(() => console.log('Dulce Costeo: Service Worker registrado'))
+        .catch(error => console.error('Error registrando Service Worker:', error));
+    });
+  }
+</script>
 </body>
 </html>
