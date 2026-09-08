@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -318,6 +317,7 @@ footer{
 
 <!-- LOGIN -->
 <div id="loginScreen" class="login-screen">
+
   <div class="login-card">
 
     <div style="font-size:50px;">🧁</div>
@@ -347,6 +347,7 @@ footer{
     <div id="loginMessage"></div>
 
   </div>
+
 </div>
 
 
@@ -396,6 +397,7 @@ footer{
     <div class="form-grid">
 
       <div>
+
         <label>Nombre de tu pastelería o panadería</label>
 
         <input
@@ -403,6 +405,7 @@ footer{
           id="businessName"
           placeholder="Ej. Dulces de María"
         >
+
       </div>
 
 
@@ -445,8 +448,15 @@ footer{
         <label>Moneda</label>
 
         <select id="currency">
-          <option value="Q">Quetzales (Q)</option>
-          <option value="$">Dólares ($)</option>
+
+          <option value="Q">
+            Quetzales (Q)
+          </option>
+
+          <option value="$">
+            Dólares ($)
+          </option>
+
         </select>
 
       </div>
@@ -760,6 +770,7 @@ async function sendLoginLink(){
       '<div class="message error">Escribe tu correo electrónico.</div>';
 
     return;
+
   }
 
   message.innerHTML =
@@ -783,12 +794,16 @@ async function sendLoginLink(){
 
     if(error){
 
-      console.error(error);
+      console.error(
+        "Error enviando enlace:",
+        error
+      );
 
       message.innerHTML =
         '<div class="message error">No pudimos enviar el enlace. Inténtalo nuevamente.</div>';
 
       return;
+
     }
 
     message.innerHTML =
@@ -796,7 +811,10 @@ async function sendLoginLink(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Error inesperado enviando enlace:",
+      error
+    );
 
     message.innerHTML =
       '<div class="message error">Ocurrió un error. Inténtalo nuevamente.</div>';
@@ -811,34 +829,103 @@ async function sendLoginLink(){
 ========================================================= */
 
 supabaseClient.auth.onAuthStateChange(
-  async (event, session) => {
+  (event, session) => {
 
-    if(session){
+    console.log(
+      "Evento de autenticación:",
+      event
+    );
 
-      await verifyUserAccess(session);
+    console.log(
+      "Sesión recibida:",
+      session
+    );
 
-    }else{
+    /*
+      Esperamos un momento para asegurarnos de que
+      Supabase haya terminado de establecer la sesión.
+    */
 
-      showLogin();
+    setTimeout(() => {
 
-    }
+      checkCurrentUser();
+
+    }, 100);
 
   }
 );
 
 
 /* =========================================================
-   VERIFICAR USUARIO
+   VERIFICAR USUARIO ACTUAL
 ========================================================= */
 
-async function verifyUserAccess(session){
+async function checkCurrentUser(){
 
   try{
 
+    const {
+      data: {
+        user
+      },
+      error: userError
+    } =
+      await supabaseClient.auth.getUser();
+
+
+    console.log(
+      "Usuario autenticado:",
+      user
+    );
+
+
+    if(userError){
+
+      console.error(
+        "Error obteniendo usuario:",
+        userError
+      );
+
+      showLogin();
+
+      return;
+
+    }
+
+
+    if(!user){
+
+      showLogin();
+
+      return;
+
+    }
+
+
     const email =
-      session.user.email
+      (user.email || "")
         .trim()
         .toLowerCase();
+
+
+    console.log(
+      "Correo que se está verificando:",
+      email
+    );
+
+
+    if(!email){
+
+      showLogin();
+
+      document
+        .getElementById("loginMessage")
+        .innerHTML =
+          '<div class="message error">No pudimos identificar el correo de tu cuenta.</div>';
+
+      return;
+
+    }
 
 
     const {
@@ -853,45 +940,63 @@ async function verifyUserAccess(session){
         .maybeSingle();
 
 
+    console.log(
+      "Resultado de la tabla usuarios:",
+      data
+    );
+
+    console.log(
+      "Error consultando usuarios:",
+      error
+    );
+
+
     if(error){
 
-      console.error(error);
-
-      await supabaseClient.auth.signOut();
+      console.error(
+        "Error consultando usuarios:",
+        error
+      );
 
       showLogin();
 
-      const message =
-        document.getElementById("loginMessage");
-
-      message.innerHTML =
-        '<div class="message error">No pudimos verificar tu acceso.</div>';
+      document
+        .getElementById("loginMessage")
+        .innerHTML =
+          '<div class="message error">No pudimos verificar tu acceso.</div>';
 
       return;
+
     }
 
 
     if(!data){
 
-      await supabaseClient.auth.signOut();
-
       showLogin();
 
-      const message =
-        document.getElementById("loginMessage");
-
-      message.innerHTML =
-        '<div class="message error">Este correo no está autorizado para usar Dulce Costeo.</div>';
+      document
+        .getElementById("loginMessage")
+        .innerHTML =
+          '<div class="message error">Este correo no está autorizado para usar Dulce Costeo.</div>';
 
       return;
+
     }
+
+
+    console.log(
+      "✅ Usuario autorizado. Entrando a Dulce Costeo."
+    );
 
 
     showApp();
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Error general de autenticación:",
+      error
+    );
 
     showLogin();
 
@@ -1017,9 +1122,13 @@ function saveBusiness(){
   business = {
 
     name,
+
     color,
+
     currency,
-    logo: business.logo || ""
+
+    logo:
+      business.logo || ""
 
   };
 
@@ -1033,8 +1142,9 @@ function saveBusiness(){
   updateBusinessPreview();
 
 
-  alert("¡Negocio guardado correctamente!");
-
+  alert(
+    "¡Negocio guardado correctamente!"
+  );
 
 }
 
@@ -1051,7 +1161,8 @@ function updateBusinessPreview(){
 
   document
     .getElementById("previewName")
-    .textContent = displayName;
+    .textContent =
+      displayName;
 
 
   document
@@ -1066,16 +1177,20 @@ function updateBusinessPreview(){
 
   document
     .getElementById("primaryColor")
-    .value = color;
+    .value =
+      color;
+
 
   document
     .getElementById("colorValue")
-    .textContent = color;
+    .textContent =
+      color;
 
 
   document
     .getElementById("headerBusinessName")
-    .style.color = color;
+    .style.color =
+      color;
 
 
   if(business.logo){
@@ -1094,11 +1209,13 @@ function updateBusinessPreview(){
 
     document
       .getElementById("headerLogo")
-      .innerHTML = "🧁";
+      .innerHTML =
+        "🧁";
 
     document
       .getElementById("previewLogo")
-      .innerHTML = "🧁";
+      .innerHTML =
+        "🧁";
 
   }
 
@@ -1117,7 +1234,8 @@ document
 
       document
         .getElementById("colorValue")
-        .textContent = this.value;
+        .textContent =
+          this.value;
 
     }
   );
@@ -1259,27 +1377,45 @@ function addIngredientRow(
 
       <select class="ingredient-unit">
 
-        <option value="lb" ${ingredient.unit==="lb" ? "selected" : ""}>
+        <option
+          value="lb"
+          ${ingredient.unit==="lb" ? "selected" : ""}
+        >
           lb
         </option>
 
-        <option value="kg" ${ingredient.unit==="kg" ? "selected" : ""}>
+        <option
+          value="kg"
+          ${ingredient.unit==="kg" ? "selected" : ""}
+        >
           kg
         </option>
 
-        <option value="g" ${ingredient.unit==="g" ? "selected" : ""}>
+        <option
+          value="g"
+          ${ingredient.unit==="g" ? "selected" : ""}
+        >
           g
         </option>
 
-        <option value="oz" ${ingredient.unit==="oz" ? "selected" : ""}>
+        <option
+          value="oz"
+          ${ingredient.unit==="oz" ? "selected" : ""}
+        >
           oz
         </option>
 
-        <option value="unidad" ${ingredient.unit==="unidad" ? "selected" : ""}>
+        <option
+          value="unidad"
+          ${ingredient.unit==="unidad" ? "selected" : ""}
+        >
           unidad
         </option>
 
-        <option value="docena" ${ingredient.unit==="docena" ? "selected" : ""}>
+        <option
+          value="docena"
+          ${ingredient.unit==="docena" ? "selected" : ""}
+        >
           docena
         </option>
 
@@ -1325,6 +1461,7 @@ function saveIngredients(){
         ".ingredient-name"
       ).value.trim();
 
+
     const price =
       parseFloat(
         row.querySelector(
@@ -1332,12 +1469,14 @@ function saveIngredients(){
         ).value
       ) || 0;
 
+
     const quantity =
       parseFloat(
         row.querySelector(
           ".ingredient-quantity"
         ).value
       ) || 0;
+
 
     const unit =
       row.querySelector(
@@ -1348,10 +1487,15 @@ function saveIngredients(){
     if(name){
 
       ingredients.push({
+
         name,
+
         price,
+
         quantity,
+
         unit
+
       });
 
     }
@@ -1373,6 +1517,7 @@ function renderIngredients(){
     document.getElementById(
       "ingredientsContainer"
     );
+
 
   container.innerHTML = "";
 
@@ -1532,6 +1677,7 @@ function saveRecipe(){
       .value
       .trim();
 
+
   const yieldValue =
     parseFloat(
       document
@@ -1539,10 +1685,12 @@ function saveRecipe(){
         .value
     ) || 0;
 
+
   const type =
     document
       .getElementById("recipeType")
       .value;
+
 
   const preparation =
     document
@@ -1589,12 +1737,14 @@ function saveRecipe(){
         ".recipe-ingredient-name"
       ).value;
 
+
     const quantity =
       parseFloat(
         row.querySelector(
           ".recipe-ingredient-quantity"
         ).value
       ) || 0;
+
 
     const unit =
       row.querySelector(
@@ -1610,7 +1760,9 @@ function saveRecipe(){
       recipeIngredients.push({
 
         ingredient,
+
         quantity,
+
         unit
 
       });
@@ -1687,17 +1839,21 @@ function clearRecipeFields(){
     .getElementById("recipeName")
     .value = "";
 
+
   document
     .getElementById("recipeYield")
     .value = "";
+
 
   document
     .getElementById("recipePreparation")
     .value = "";
 
+
   document
     .getElementById("recipeIngredients")
     .innerHTML = "";
+
 
   document
     .getElementById("recipeResult")
@@ -1737,6 +1893,7 @@ function renderSavedRecipes(){
 
     const item =
       document.createElement("div");
+
 
     item.className =
       "saved-item";
@@ -1810,15 +1967,18 @@ function loadRecipe(id){
     .value =
       recipe.name;
 
+
   document
     .getElementById("recipeYield")
     .value =
       recipe.yield;
 
+
   document
     .getElementById("recipeType")
     .value =
       recipe.type;
+
 
   document
     .getElementById("recipePreparation")
@@ -1830,6 +1990,7 @@ function loadRecipe(id){
     document.getElementById(
       "recipeIngredients"
     );
+
 
   container.innerHTML = "";
 
@@ -1844,6 +2005,7 @@ function loadRecipe(id){
         container.querySelectorAll(
           ".recipe-row"
         );
+
 
       const row =
         rows[rows.length - 1];
@@ -1937,11 +2099,14 @@ function updateRecipeSelect(){
     const option =
       document.createElement("option");
 
+
     option.value =
       recipe.id;
 
+
     option.textContent =
       recipe.name;
+
 
     select.appendChild(option);
 
@@ -2126,4 +2291,3 @@ document.addEventListener(
 
 </body>
 </html>
-```
