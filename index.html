@@ -64,6 +64,17 @@
     }
 
     /* =========================================================
+       LOGO / IMAGEN PREDETERMINADA
+    ========================================================= */
+
+    .default-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* =========================================================
        CUPCAKE - SILUETA
     ========================================================= */
 
@@ -238,6 +249,7 @@
 
     .landing-button:hover {
       transform: translateY(-2px);
+
       box-shadow:
         0 14px 30px rgba(91,75,139,.28);
     }
@@ -258,12 +270,6 @@
 
     .landing-register button:hover {
       text-decoration: underline;
-    }
-
-    .landing-footer {
-      margin-top: 25px;
-      font-size: 12px;
-      color: #817987;
     }
 
     /* =========================================================
@@ -329,6 +335,14 @@
       justify-content: center;
 
       padding: 15px;
+
+      overflow: hidden;
+    }
+
+    .auth-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .auth-card h1 {
@@ -417,6 +431,10 @@
       color: var(--success);
     }
 
+    /* =========================================================
+       PASSWORD
+    ========================================================= */
+
     .password-wrapper {
       position: relative;
     }
@@ -438,9 +456,35 @@
 
       color: #777;
 
-      font-size: 18px;
+      width: 36px;
+      height: 36px;
 
-      padding: 6px;
+      padding: 7px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 8px;
+    }
+
+    .password-toggle:hover {
+      background: rgba(139,115,199,.08);
+      color: var(--primary-color);
+    }
+
+    .password-toggle svg {
+      width: 20px;
+      height: 20px;
+
+      stroke: currentColor;
+
+      fill: none;
+
+      stroke-width: 2;
+
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     /* =========================================================
@@ -1232,6 +1276,18 @@
       height: 75px;
 
       margin: 0 auto 14px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      overflow: hidden;
+    }
+
+    .loading-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     /* =========================================================
@@ -1335,52 +1391,26 @@
 
 <body>
 
-  <!-- =======================================================
-       LOADING
-  ======================================================== -->
-
+  <!-- LOADING -->
   <div id="loadingScreen" class="loading-screen">
-
     <div class="loading-card">
+      <div class="loading-icon" id="loadingIcon"></div>
 
-      <div
-        class="loading-icon"
-        id="loadingIcon">
-      </div>
+      <h2>Abriendo Dulce Costeo...</h2>
 
-      <h2>
-        Abriendo Dulce Costeo...
-      </h2>
-
-      <p>
-        Un momento, por favor.
-      </p>
-
+      <p>Un momento, por favor.</p>
     </div>
-
   </div>
 
-
-  <!-- =======================================================
-       LANDING PAGE
-  ======================================================== -->
-
-  <div
-    id="landingScreen"
-    class="landing-screen">
-
+  <!-- LANDING PAGE -->
+  <div id="landingScreen" class="landing-screen">
     <div class="landing-card">
 
       <div class="landing-illustration">
-
         <div class="landing-cupcake">
-
           <div id="landingLogo"></div>
-
         </div>
-
       </div>
-
 
       <div class="landing-content">
 
@@ -1388,9 +1418,7 @@
           🧁 Dulce Costeo
         </div>
 
-        <h1>
-          Dulce Costeo
-        </h1>
+        <h1>Dulce Costeo</h1>
 
         <h2>
           La herramienta de costeo para reposteros y cocineros
@@ -1404,61 +1432,38 @@
 
         <button
           class="landing-button"
-          onclick="showLogin()">
-
+          onclick="showLogin()"
+        >
           ✨ Acceder a Dulce Costeo
-
         </button>
 
         <div class="landing-register">
-
           ¿Aún no tienes una cuenta?
 
           <button onclick="showRegister()">
             Regístrate aquí
           </button>
-
-        </div>
-
-        <div class="landing-footer">
-          Patrocinado y desarrollado por Ubuntu Tech S.A.
         </div>
 
       </div>
-
     </div>
-
   </div>
 
-
-  <!-- =======================================================
-       LOGIN
-  ======================================================== -->
-
-  <div
-    id="loginScreen"
-    class="auth-screen">
-
+  <!-- LOGIN -->
+  <div id="loginScreen" class="auth-screen">
     <div class="auth-card">
 
-      <div
-        class="auth-logo"
-        id="loginLogo">
-      </div>
+      <div class="auth-logo" id="loginLogo"></div>
 
-      <h1>
-        Bienvenida a Dulce Costeo
-      </h1>
+      <h1>Bienvenida a Dulce Costeo</h1>
 
       <p>
         Ingresa con tu correo y contraseña para continuar.
       </p>
 
-
       <div class="auth-form">
 
         <div class="form-group">
-
           <label for="loginEmail">
             Correo electrónico
           </label>
@@ -1469,12 +1474,9 @@
             placeholder="tu@email.com"
             autocomplete="email"
           />
-
         </div>
 
-
         <div class="form-group">
-
           <label for="loginPassword">
             Contraseña
           </label>
@@ -1491,47 +1493,38 @@
             <button
               type="button"
               class="password-toggle"
-              onclick="togglePassword('loginPassword', this)">
-
-              👁️
-
-            </button>
+              onclick="togglePassword('loginPassword', this)"
+              aria-label="Mostrar contraseña"
+            ></button>
 
           </div>
-
         </div>
-
 
         <div style="text-align:right; margin-top:-5px;">
 
           <button
             class="auth-link"
-            onclick="showForgotPassword()">
-
+            onclick="showForgotPassword()"
+          >
             ¿Olvidaste tu contraseña?
-
           </button>
 
         </div>
 
-
         <button
           class="btn btn-primary"
           style="width:100%; margin-top:15px;"
-          onclick="loginWithPassword()">
-
+          onclick="loginWithPassword()"
+        >
           🔐 Iniciar sesión
-
         </button>
-
 
         <div
           id="loginMessage"
-          class="auth-message">
-        </div>
+          class="auth-message"
+        ></div>
 
       </div>
-
 
       <div class="auth-footer">
 
@@ -1545,47 +1538,30 @@
 
         <button
           class="auth-link"
-          onclick="showLanding()">
-
+          onclick="showLanding()"
+        >
           ← Volver al inicio
-
         </button>
 
       </div>
-
     </div>
-
   </div>
 
-
-  <!-- =======================================================
-       REGISTER
-  ======================================================== -->
-
-  <div
-    id="registerScreen"
-    class="auth-screen">
-
+  <!-- REGISTER -->
+  <div id="registerScreen" class="auth-screen">
     <div class="auth-card">
 
-      <div
-        class="auth-logo"
-        id="registerLogo">
-      </div>
+      <div class="auth-logo" id="registerLogo"></div>
 
-      <h1>
-        Crear tu cuenta
-      </h1>
+      <h1>Crear tu cuenta</h1>
 
       <p>
         Regístrate para comenzar a usar Dulce Costeo.
       </p>
 
-
       <div class="auth-form">
 
         <div class="form-group">
-
           <label for="registerEmail">
             Correo electrónico
           </label>
@@ -1596,12 +1572,9 @@
             placeholder="tu@email.com"
             autocomplete="email"
           />
-
         </div>
 
-
         <div class="form-group">
-
           <label for="registerPassword">
             Contraseña
           </label>
@@ -1618,19 +1591,14 @@
             <button
               type="button"
               class="password-toggle"
-              onclick="togglePassword('registerPassword', this)">
-
-              👁️
-
-            </button>
+              onclick="togglePassword('registerPassword', this)"
+              aria-label="Mostrar contraseña"
+            ></button>
 
           </div>
-
         </div>
 
-
         <div class="form-group">
-
           <label for="registerPasswordConfirm">
             Confirmar contraseña
           </label>
@@ -1647,34 +1615,27 @@
             <button
               type="button"
               class="password-toggle"
-              onclick="togglePassword('registerPasswordConfirm', this)">
-
-              👁️
-
-            </button>
+              onclick="togglePassword('registerPasswordConfirm', this)"
+              aria-label="Mostrar contraseña"
+            ></button>
 
           </div>
-
         </div>
-
 
         <button
           class="btn btn-primary"
           style="width:100%; margin-top:10px;"
-          onclick="registerUser()">
-
+          onclick="registerUser()"
+        >
           ✨ Crear cuenta
-
         </button>
-
 
         <div
           id="registerMessage"
-          class="auth-message">
-        </div>
+          class="auth-message"
+        ></div>
 
       </div>
-
 
       <div class="auth-footer">
 
@@ -1688,48 +1649,31 @@
 
         <button
           class="auth-link"
-          onclick="showLanding()">
-
+          onclick="showLanding()"
+        >
           ← Volver al inicio
-
         </button>
 
       </div>
-
     </div>
-
   </div>
 
-
-  <!-- =======================================================
-       FORGOT PASSWORD
-  ======================================================== -->
-
-  <div
-    id="forgotPasswordScreen"
-    class="auth-screen">
-
+  <!-- FORGOT PASSWORD -->
+  <div id="forgotPasswordScreen" class="auth-screen">
     <div class="auth-card">
 
-      <div
-        class="auth-logo"
-        id="forgotLogo">
-      </div>
+      <div class="auth-logo" id="forgotLogo"></div>
 
-      <h1>
-        Recuperar contraseña
-      </h1>
+      <h1>Recuperar contraseña</h1>
 
       <p>
         Escribe tu correo y te enviaremos un enlace para
         crear una nueva contraseña.
       </p>
 
-
       <div class="auth-form">
 
         <div class="form-group">
-
           <label for="forgotEmail">
             Correo electrónico
           </label>
@@ -1740,73 +1684,51 @@
             placeholder="tu@email.com"
             autocomplete="email"
           />
-
         </div>
-
 
         <button
           class="btn btn-primary"
           style="width:100%; margin-top:8px;"
-          onclick="sendPasswordReset()">
-
+          onclick="sendPasswordReset()"
+        >
           📩 Enviar enlace
-
         </button>
-
 
         <div
           id="forgotMessage"
-          class="auth-message">
-        </div>
+          class="auth-message"
+        ></div>
 
       </div>
-
 
       <div class="auth-footer">
 
         <button
           class="auth-link"
-          onclick="showLogin()">
-
+          onclick="showLogin()"
+        >
           ← Volver a iniciar sesión
-
         </button>
 
       </div>
-
     </div>
-
   </div>
 
-
-  <!-- =======================================================
-       UPDATE PASSWORD
-  ======================================================== -->
-
-  <div
-    id="updatePasswordScreen"
-    class="auth-screen">
-
+  <!-- UPDATE PASSWORD -->
+  <div id="updatePasswordScreen" class="auth-screen">
     <div class="auth-card">
 
-      <div
-        class="auth-logo"
-        id="updateLogo">
-      </div>
+      <div class="auth-logo" id="updateLogo"></div>
 
-      <h1>
-        Nueva contraseña
-      </h1>
+      <h1>Nueva contraseña</h1>
 
       <p>
         Crea una nueva contraseña para tu cuenta.
       </p>
 
-
       <div class="auth-form">
 
         <div class="form-group">
-
           <label for="newPassword">
             Nueva contraseña
           </label>
@@ -1823,19 +1745,14 @@
             <button
               type="button"
               class="password-toggle"
-              onclick="togglePassword('newPassword', this)">
-
-              👁️
-
-            </button>
+              onclick="togglePassword('newPassword', this)"
+              aria-label="Mostrar contraseña"
+            ></button>
 
           </div>
-
         </div>
 
-
         <div class="form-group">
-
           <label for="newPasswordConfirm">
             Confirmar contraseña
           </label>
@@ -1852,47 +1769,32 @@
             <button
               type="button"
               class="password-toggle"
-              onclick="togglePassword('newPasswordConfirm', this)">
-
-              👁️
-
-            </button>
+              onclick="togglePassword('newPasswordConfirm', this)"
+              aria-label="Mostrar contraseña"
+            ></button>
 
           </div>
-
         </div>
-
 
         <button
           class="btn btn-primary"
           style="width:100%; margin-top:8px;"
-          onclick="updatePassword()">
-
+          onclick="updatePassword()"
+        >
           🔐 Guardar nueva contraseña
-
         </button>
-
 
         <div
           id="updateMessage"
-          class="auth-message">
-        </div>
+          class="auth-message"
+        ></div>
 
       </div>
-
     </div>
-
   </div>
 
-
-  <!-- =======================================================
-       APP
-  ======================================================== -->
-
-  <div
-    id="app"
-    class="app"
-    style="display:none;">
+  <!-- APP -->
+  <div id="app" class="app" style="display:none;">
 
     <header>
 
@@ -1902,17 +1804,16 @@
 
           <div
             class="brand-logo"
-            id="headerLogo">
-          </div>
+            id="headerLogo"
+          ></div>
 
           <div class="brand-text">
 
             <div
               class="brand-title"
-              id="headerBusinessName">
-
+              id="headerBusinessName"
+            >
               Dulce Costeo
-
             </div>
 
             <div class="brand-subtitle">
@@ -1923,17 +1824,14 @@
 
         </div>
 
-
         <button
           class="logout-btn"
-          onclick="logout()">
-
+          onclick="logout()"
+        >
           Cerrar sesión
-
         </button>
 
       </div>
-
 
       <div class="nav-wrapper">
 
@@ -1942,37 +1840,33 @@
           <button
             class="nav-tab active"
             data-section="homeSection"
-            onclick="showSection('homeSection')">
-
+            onclick="showSection('homeSection')"
+          >
             🏠 Inicio
-
           </button>
 
           <button
             class="nav-tab"
             data-section="ingredientsSection"
-            onclick="showSection('ingredientsSection')">
-
+            onclick="showSection('ingredientsSection')"
+          >
             🥣 Ingredientes
-
           </button>
 
           <button
             class="nav-tab"
             data-section="recipesSection"
-            onclick="showSection('recipesSection')">
-
+            onclick="showSection('recipesSection')"
+          >
             🎂 Recetas
-
           </button>
 
           <button
             class="nav-tab"
             data-section="costingSection"
-            onclick="showSection('costingSection')">
-
+            onclick="showSection('costingSection')"
+          >
             💰 Costear
-
           </button>
 
         </nav>
@@ -1981,14 +1875,13 @@
 
     </header>
 
-
     <main>
 
       <!-- INICIO -->
-
       <section
         id="homeSection"
-        class="app-section active">
+        class="app-section active"
+      >
 
         <h1 class="section-title">
           Inicio
@@ -1998,13 +1891,9 @@
           Configura tu negocio y empieza a calcular tus costos.
         </p>
 
-
         <div class="card">
 
-          <h2>
-            🏪 Mi negocio
-          </h2>
-
+          <h2>🏪 Mi negocio</h2>
 
           <div class="form-grid">
 
@@ -2022,7 +1911,6 @@
 
             </div>
 
-
             <div class="form-group">
 
               <label for="businessCurrency">
@@ -2031,7 +1919,8 @@
 
               <select
                 id="businessCurrency"
-                onchange="saveCurrency()">
+                onchange="saveCurrency()"
+              >
 
                 <option value="Q">
                   Quetzales (Q)
@@ -2044,7 +1933,6 @@
               </select>
 
             </div>
-
 
             <div class="form-group">
 
@@ -2063,16 +1951,14 @@
 
                 <span
                   class="color-value"
-                  id="colorValue">
-
+                  id="colorValue"
+                >
                   #8B73C7
-
                 </span>
 
               </div>
 
             </div>
-
 
             <div class="form-group">
 
@@ -2095,43 +1981,38 @@
 
           </div>
 
-
           <div class="button-row">
 
             <button
               class="btn btn-primary"
-              onclick="saveBusiness()">
-
+              onclick="saveBusiness()"
+            >
               💾 Guardar negocio
-
             </button>
 
           </div>
-
 
           <div class="business-preview">
 
             <div
               class="preview-logo"
-              id="previewLogo">
-            </div>
+              id="previewLogo"
+            ></div>
 
             <div>
 
               <div
                 class="preview-name"
-                id="previewName">
-
+                id="previewName"
+              >
                 Tu negocio
-
               </div>
 
               <div
                 class="preview-info"
-                id="previewInfo">
-
+                id="previewInfo"
+              >
                 Así aparecerá tu información en Dulce Costeo.
-
               </div>
 
             </div>
@@ -2142,12 +2023,11 @@
 
       </section>
 
-
       <!-- INGREDIENTES -->
-
       <section
         id="ingredientsSection"
-        class="app-section">
+        class="app-section"
+      >
 
         <h1 class="section-title">
           Ingredientes
@@ -2157,18 +2037,14 @@
           Registra cuánto compras y cuánto pagas por cada ingrediente.
         </p>
 
-
         <div class="card">
 
-          <h2>
-            ➕ Agregar ingrediente
-          </h2>
+          <h2>➕ Agregar ingrediente</h2>
 
           <p class="help-text">
             Guarda cada ingrediente por separado.
             Después podrás editarlo sin afectar a los demás.
           </p>
-
 
           <div class="ingredient-fields">
 
@@ -2185,7 +2061,6 @@
               />
 
             </div>
-
 
             <div class="form-group">
 
@@ -2204,7 +2079,6 @@
 
             </div>
 
-
             <div class="form-group">
 
               <label for="newIngredientQuantity">
@@ -2221,7 +2095,6 @@
               />
 
             </div>
-
 
             <div class="form-group">
 
@@ -2261,51 +2134,44 @@
 
           </div>
 
-
           <div class="button-row">
 
             <button
               class="btn btn-primary"
-              onclick="saveNewIngredient()">
-
+              onclick="saveNewIngredient()"
+            >
               💾 Guardar ingrediente
-
             </button>
 
             <button
               class="btn btn-secondary"
-              onclick="clearNewIngredientFields()">
-
+              onclick="clearNewIngredientFields()"
+            >
               🧹 Limpiar campos
-
             </button>
 
           </div>
 
         </div>
 
-
         <div class="card">
 
-          <h2>
-            🥣 Mis ingredientes guardados
-          </h2>
+          <h2>🥣 Mis ingredientes guardados</h2>
 
           <div
             id="ingredientList"
-            class="ingredient-list">
-          </div>
+            class="ingredient-list"
+          ></div>
 
         </div>
 
       </section>
 
-
       <!-- RECETAS -->
-
       <section
         id="recipesSection"
-        class="app-section">
+        class="app-section"
+      >
 
         <h1 class="section-title">
           Recetas
@@ -2315,13 +2181,11 @@
           Crea tus recetas indicando los ingredientes y cantidades utilizadas.
         </p>
 
-
         <div class="card">
 
           <h2 id="recipeFormTitle">
             🎂 Nueva receta
           </h2>
-
 
           <div class="form-grid">
 
@@ -2338,7 +2202,6 @@
               />
 
             </div>
-
 
             <div class="form-group">
 
@@ -2357,7 +2220,6 @@
 
             </div>
 
-
             <div class="form-group full">
 
               <label for="recipePreparation">
@@ -2373,57 +2235,47 @@
 
           </div>
 
-
           <h3 style="margin-top:25px;">
             Ingredientes de la receta
           </h3>
 
-
           <div id="recipeIngredients"></div>
-
 
           <div class="button-row">
 
             <button
               class="btn btn-secondary"
-              onclick="addRecipeIngredientRow()">
-
+              onclick="addRecipeIngredientRow()"
+            >
               ➕ Agregar ingrediente
-
             </button>
 
           </div>
-
 
           <div class="button-row">
 
             <button
               class="btn btn-primary"
               id="saveRecipeButton"
-              onclick="saveRecipe()">
-
+              onclick="saveRecipe()"
+            >
               💾 Guardar receta
-
             </button>
 
             <button
               class="btn btn-secondary"
-              onclick="clearRecipeFields()">
-
+              onclick="clearRecipeFields()"
+            >
               🧹 Limpiar campos
-
             </button>
 
           </div>
 
         </div>
 
-
         <div class="card">
 
-          <h2>
-            📚 Mis recetas guardadas
-          </h2>
+          <h2>📚 Mis recetas guardadas</h2>
 
           <div id="savedRecipes"></div>
 
@@ -2431,12 +2283,11 @@
 
       </section>
 
-
       <!-- COSTEAR -->
-
       <section
         id="costingSection"
-        class="app-section">
+        class="app-section"
+      >
 
         <h1 class="section-title">
           Costear
@@ -2446,13 +2297,9 @@
           Calcula cuánto realmente te cuesta producir y cuánto podrías cobrar.
         </p>
 
-
         <div class="card">
 
-          <h2>
-            💰 Calculadora de costos
-          </h2>
-
+          <h2>💰 Calculadora de costos</h2>
 
           <div class="cost-grid">
 
@@ -2464,7 +2311,8 @@
 
               <select
                 id="costRecipe"
-                onchange="calculateCost()">
+                onchange="calculateCost()"
+              >
 
                 <option value="">
                   Selecciona una receta
@@ -2473,7 +2321,6 @@
               </select>
 
             </div>
-
 
             <div class="form-group">
 
@@ -2493,7 +2340,6 @@
 
             </div>
 
-
             <div class="form-group">
 
               <label for="gasCost">
@@ -2511,7 +2357,6 @@
               />
 
             </div>
-
 
             <div class="form-group">
 
@@ -2531,7 +2376,6 @@
 
             </div>
 
-
             <div class="form-group">
 
               <label for="laborCost">
@@ -2550,7 +2394,6 @@
 
             </div>
 
-
             <div class="form-group">
 
               <label for="otherCost">
@@ -2568,7 +2411,6 @@
               />
 
             </div>
-
 
             <div class="form-group">
 
@@ -2590,192 +2432,149 @@
 
           </div>
 
-
           <div
             id="costWarning"
-            class="warning">
-          </div>
-
+            class="warning"
+          ></div>
 
           <div
             id="costResult"
             class="cost-result"
-            style="display:none;">
+            style="display:none;"
+          >
 
-            <h3>
-              📊 Resultado
-            </h3>
-
+            <h3>📊 Resultado</h3>
 
             <div class="result-grid">
 
               <div class="result-item">
-
                 <div class="result-label">
                   Costo de ingredientes
                 </div>
 
                 <div
                   class="result-value"
-                  id="resultIngredients">
-
+                  id="resultIngredients"
+                >
                   Q0.00
-
                 </div>
-
               </div>
 
-
               <div class="result-item">
-
                 <div class="result-label">
                   Costo de empaque
                 </div>
 
                 <div
                   class="result-value"
-                  id="resultPackaging">
-
+                  id="resultPackaging"
+                >
                   Q0.00
-
                 </div>
-
               </div>
 
-
               <div class="result-item">
-
                 <div class="result-label">
                   Gas + luz
                 </div>
 
                 <div
                   class="result-value"
-                  id="resultUtilities">
-
+                  id="resultUtilities"
+                >
                   Q0.00
-
                 </div>
-
               </div>
 
-
               <div class="result-item">
-
                 <div class="result-label">
                   Mano de obra
                 </div>
 
                 <div
                   class="result-value"
-                  id="resultLabor">
-
+                  id="resultLabor"
+                >
                   Q0.00
-
                 </div>
-
               </div>
 
-
               <div class="result-item">
-
                 <div class="result-label">
                   Otros gastos
                 </div>
 
                 <div
                   class="result-value"
-                  id="resultOther">
-
+                  id="resultOther"
+                >
                   Q0.00
-
                 </div>
-
               </div>
 
-
               <div class="result-item">
-
                 <div class="result-label">
                   Costo total de la receta
                 </div>
 
                 <div
                   class="result-value"
-                  id="resultTotal">
-
+                  id="resultTotal"
+                >
                   Q0.00
-
                 </div>
-
               </div>
 
-
               <div class="result-item">
-
                 <div class="result-label">
                   Costo por unidad
                 </div>
 
                 <div
                   class="result-value"
-                  id="resultPerUnit">
-
+                  id="resultPerUnit"
+                >
                   Q0.00
-
                 </div>
-
               </div>
 
-
               <div class="result-item highlight">
-
                 <div class="result-label">
                   Precio sugerido por unidad
                 </div>
 
                 <div
                   class="result-value"
-                  id="resultSalePrice">
-
+                  id="resultSalePrice"
+                >
                   Q0.00
-
                 </div>
-
               </div>
 
-
               <div class="result-item highlight">
-
                 <div class="result-label">
                   Ganancia por unidad
                 </div>
 
                 <div
                   class="result-value"
-                  id="resultProfitPerUnit">
-
+                  id="resultProfitPerUnit"
+                >
                   Q0.00
-
                 </div>
-
               </div>
 
-
               <div class="result-item highlight">
-
                 <div class="result-label">
                   Ganancia total
                 </div>
 
                 <div
                   class="result-value"
-                  id="resultTotalProfit">
-
+                  id="resultTotalProfit"
+                >
                   Q0.00
-
                 </div>
-
               </div>
 
             </div>
@@ -2788,13 +2587,12 @@
 
     </main>
 
-
     <footer>
 
       <div
         class="footer-logo"
-        id="footerLogo">
-      </div>
+        id="footerLogo"
+      ></div>
 
       <div>
         <strong id="footerBusinessName">
@@ -2810,18 +2608,32 @@
 
   </div>
 
-
-  <!-- =======================================================
+  <!-- =========================================================
        JAVASCRIPT
-  ======================================================== -->
+  ========================================================= -->
 
   <script>
 
     /* =========================================================
-       CUPCAKE SVG
+       CONFIGURACIÓN
+    ========================================================= */
+
+    const DEFAULT_LOGO =
+      "./dulce%20costeo.png";
+
+
+    /* =========================================================
+       CUPCAKE SVG DE RESPALDO
+       ID ÚNICO PARA EVITAR GRADIENTES DUPLICADOS
     ========================================================= */
 
     function cupcakeSvg() {
+
+      const gradientId =
+        "cupcakeGradient_" +
+        Math.random()
+          .toString(36)
+          .substring(2, 10);
 
       return `
         <svg
@@ -2829,40 +2641,42 @@
           viewBox="0 0 120 120"
           xmlns="http://www.w3.org/2000/svg"
           role="img"
-          aria-label="Cupcake">
+          aria-label="Cupcake"
+        >
 
           <defs>
 
             <linearGradient
-              id="cupcakeGradient"
+              id="${gradientId}"
               x1="0%"
               y1="0%"
               x2="100%"
-              y2="100%">
+              y2="100%"
+            >
 
               <stop
                 offset="0%"
-                stop-color="#a98bd4"/>
+                stop-color="#a98bd4"
+              />
 
               <stop
                 offset="100%"
-                stop-color="#79a9ca"/>
+                stop-color="#79a9ca"
+              />
 
             </linearGradient>
 
           </defs>
-
 
           <ellipse
             class="cupcake-shadow"
             cx="60"
             cy="108"
             rx="29"
-            ry="5"/>
-
+            ry="5"
+          />
 
           <path
-            class="cupcake-main"
             d="
               M28 54
               C24 48 29 41 37 41
@@ -2883,11 +2697,11 @@
               L50 106
               C45 106 42 103 41 99
               Z
-            "/>
-
+            "
+            fill="url(#${gradientId})"
+          />
 
           <path
-            class="cupcake-detail"
             d="
               M43 66
               L48 100
@@ -2902,9 +2716,28 @@
             stroke="white"
             stroke-width="2.5"
             stroke-linecap="round"
-            opacity=".5"/>
+            opacity=".5"
+          />
 
         </svg>
+      `;
+
+    }
+
+
+    /* =========================================================
+       LOGO PREDETERMINADO
+    ========================================================= */
+
+    function defaultLogoHtml() {
+
+      return `
+        <img
+          src="${DEFAULT_LOGO}"
+          class="default-logo"
+          alt="Dulce Costeo"
+          onerror="this.onerror=null; this.parentElement.innerHTML=cupcakeSvg();"
+        >
       `;
 
     }
@@ -2926,7 +2759,6 @@
         SUPABASE_PUBLISHABLE_KEY
       );
 
-
     let checkingUser = false;
 
 
@@ -2937,14 +2769,12 @@
     function hideAllScreens() {
 
       const screens = [
-
         "loadingScreen",
         "landingScreen",
         "loginScreen",
         "registerScreen",
         "forgotPasswordScreen",
         "updatePasswordScreen"
-
       ];
 
       screens.forEach(id => {
@@ -2957,7 +2787,6 @@
         }
 
       });
-
 
       document.getElementById(
         "app"
@@ -3124,6 +2953,56 @@
        PASSWORD VISIBILITY
     ========================================================= */
 
+    function eyeIcon() {
+
+      return `
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"
+          ></path>
+
+          <circle
+            cx="12"
+            cy="12"
+            r="2.5"
+          ></circle>
+        </svg>
+      `;
+
+    }
+
+
+    function eyeOffIcon() {
+
+      return `
+        <svg
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            d="M3 3l18 18"
+          ></path>
+
+          <path
+            d="M10.6 6.2A9.7 9.7 0 0 1 12 6c6.5 0 10 6 10 6a17.7 17.7 0 0 1-3.2 3.8"
+          ></path>
+
+          <path
+            d="M6.2 6.2C3.4 8.1 2 12 2 12s3.5 6 10 6c1.5 0 2.8-.3 4-.8"
+          ></path>
+
+          <path
+            d="M9.9 9.9a3 3 0 0 0 4.2 4.2"
+          ></path>
+        </svg>
+      `;
+
+    }
+
+
     function togglePassword(
       inputId,
       button
@@ -3134,7 +3013,7 @@
           inputId
         );
 
-      if (!input) return;
+      if (!input || !button) return;
 
       if (
         input.type === "password"
@@ -3142,17 +3021,43 @@
 
         input.type = "text";
 
-        button.textContent =
-          "🙈";
+        button.innerHTML =
+          eyeOffIcon();
+
+        button.setAttribute(
+          "aria-label",
+          "Ocultar contraseña"
+        );
 
       } else {
 
         input.type = "password";
 
-        button.textContent =
-          "👁️";
+        button.innerHTML =
+          eyeIcon();
+
+        button.setAttribute(
+          "aria-label",
+          "Mostrar contraseña"
+        );
 
       }
+
+    }
+
+
+    function initializePasswordButtons() {
+
+      document
+        .querySelectorAll(
+          ".password-toggle"
+        )
+        .forEach(button => {
+
+          button.innerHTML =
+            eyeIcon();
+
+        });
 
     }
 
@@ -3177,7 +3082,6 @@
             .auth
             .getUser();
 
-
         if (error) {
 
           showLanding();
@@ -3186,10 +3090,8 @@
 
         }
 
-
         const user =
           data.user;
-
 
         if (
           !user ||
@@ -3202,12 +3104,10 @@
 
         }
 
-
         const email =
           user.email
             .trim()
             .toLowerCase();
-
 
         const {
           data: authorization,
@@ -3223,7 +3123,6 @@
               email
             )
             .maybeSingle();
-
 
         if (
           authorizationError
@@ -3250,7 +3149,6 @@
 
         }
 
-
         if (
           !authorization ||
           authorization.activo !== true
@@ -3272,7 +3170,6 @@
 
         }
 
-
         /* ADMINISTRADOR */
 
         if (
@@ -3285,19 +3182,16 @@
 
         }
 
-
         /* PRUEBA DE 7 DÍAS */
 
         let trialStartedAt =
           authorization.trial_started_at;
-
 
         if (!trialStartedAt) {
 
           trialStartedAt =
             new Date()
               .toISOString();
-
 
           const {
             error: trialError
@@ -3312,7 +3206,6 @@
                 "id",
                 authorization.id
               );
-
 
           if (trialError) {
 
@@ -3339,26 +3232,21 @@
 
         }
 
-
         const trialStart =
           new Date(
             trialStartedAt
           );
 
-
         const now =
           new Date();
-
 
         const difference =
           now.getTime() -
           trialStart.getTime();
 
-
         const daysUsed =
           difference /
           (1000 * 60 * 60 * 24);
-
 
         if (
           daysUsed >= 7
@@ -3379,7 +3267,6 @@
           return;
 
         }
-
 
         showApp();
 
@@ -3403,7 +3290,7 @@
 
 
     /* =========================================================
-       LOGIN CON CORREO + CONTRASEÑA
+       LOGIN
     ========================================================= */
 
     async function loginWithPassword() {
@@ -3417,14 +3304,12 @@
           .trim()
           .toLowerCase();
 
-
       const password =
         document
           .getElementById(
             "loginPassword"
           )
           .value;
-
 
       if (!email) {
 
@@ -3438,7 +3323,6 @@
 
       }
 
-
       if (!password) {
 
         showAuthMessage(
@@ -3451,13 +3335,11 @@
 
       }
 
-
       showAuthMessage(
         "loginMessage",
         "Iniciando sesión...",
         "success"
       );
-
 
       try {
 
@@ -3471,10 +3353,8 @@
               password
             });
 
-
         if (error)
           throw error;
-
 
         await checkCurrentUser();
 
@@ -3484,7 +3364,6 @@
           "Error iniciando sesión:",
           error
         );
-
 
         showAuthMessage(
           "loginMessage",
@@ -3512,7 +3391,6 @@
           .trim()
           .toLowerCase();
 
-
       const password =
         document
           .getElementById(
@@ -3520,14 +3398,12 @@
           )
           .value;
 
-
       const confirmPassword =
         document
           .getElementById(
             "registerPasswordConfirm"
           )
           .value;
-
 
       if (!email) {
 
@@ -3541,7 +3417,6 @@
 
       }
 
-
       if (password.length < 6) {
 
         showAuthMessage(
@@ -3553,7 +3428,6 @@
         return;
 
       }
-
 
       if (
         password !==
@@ -3570,13 +3444,11 @@
 
       }
 
-
       showAuthMessage(
         "registerMessage",
         "Creando tu cuenta...",
         "success"
       );
-
 
       try {
 
@@ -3601,18 +3473,8 @@
 
             });
 
-
         if (error)
           throw error;
-
-
-        /*
-          Creamos también el registro
-          de autorización en la tabla usuarios.
-
-          El usuario queda activo para
-          comenzar su prueba de 7 días.
-        */
 
         const {
           error: userTableError
@@ -3629,13 +3491,6 @@
 
             });
 
-
-        /*
-          Si Supabase exige confirmación
-          del correo, normalmente no habrá
-          sesión todavía.
-        */
-
         if (
           data.user &&
           !data.session
@@ -3650,12 +3505,6 @@
           return;
 
         }
-
-
-        /*
-          Si la cuenta se creó y hay sesión,
-          verificamos autorización.
-        */
 
         if (
           data.session
@@ -3695,7 +3544,6 @@
           error
         );
 
-
         showAuthMessage(
           "registerMessage",
           "No pudimos crear la cuenta. Verifica el correo e inténtalo nuevamente.",
@@ -3722,7 +3570,6 @@
           .trim()
           .toLowerCase();
 
-
       if (!email) {
 
         showAuthMessage(
@@ -3735,13 +3582,11 @@
 
       }
 
-
       showAuthMessage(
         "forgotMessage",
         "Enviando enlace...",
         "success"
       );
-
 
       try {
 
@@ -3760,10 +3605,8 @@
               }
             );
 
-
         if (error)
           throw error;
-
 
         showAuthMessage(
           "forgotMessage",
@@ -3777,7 +3620,6 @@
           "Error recuperando contraseña:",
           error
         );
-
 
         showAuthMessage(
           "forgotMessage",
@@ -3803,14 +3645,12 @@
           )
           .value;
 
-
       const confirmPassword =
         document
           .getElementById(
             "newPasswordConfirm"
           )
           .value;
-
 
       if (
         password.length < 6
@@ -3825,7 +3665,6 @@
         return;
 
       }
-
 
       if (
         password !==
@@ -3842,7 +3681,6 @@
 
       }
 
-
       try {
 
         const {
@@ -3856,17 +3694,14 @@
 
             });
 
-
         if (error)
           throw error;
-
 
         showAuthMessage(
           "updateMessage",
           "¡Contraseña actualizada correctamente! Ahora puedes iniciar sesión.",
           "success"
         );
-
 
         setTimeout(
           async () => {
@@ -3881,14 +3716,12 @@
           1800
         );
 
-
       } catch (error) {
 
         console.error(
           "Error actualizando contraseña:",
           error
         );
-
 
         showAuthMessage(
           "updateMessage",
@@ -3939,7 +3772,6 @@
 
           }
 
-
           if (
             event ===
             "SIGNED_OUT"
@@ -3950,7 +3782,6 @@
             return;
 
           }
-
 
           if (
             event ===
@@ -4086,17 +3917,14 @@
               .remove("active")
         );
 
-
       const section =
         document.getElementById(
           sectionId
         );
 
-
       if (section)
         section.classList
           .add("active");
-
 
       document
         .querySelectorAll(
@@ -4113,7 +3941,6 @@
 
           }
         );
-
 
       window.scrollTo({
         top: 0,
@@ -4138,7 +3965,6 @@
           ""
         );
 
-
       if (
         hex.length === 3
       ) {
@@ -4153,13 +3979,11 @@
 
       }
 
-
       const r =
         parseInt(
           hex.substring(0,2),
           16
         );
-
 
       const g =
         parseInt(
@@ -4167,13 +3991,11 @@
           16
         );
 
-
       const b =
         parseInt(
           hex.substring(4,6),
           16
         );
-
 
       return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 
@@ -4186,14 +4008,12 @@
         business.color ||
         "#8b73c7";
 
-
       document.documentElement
         .style
         .setProperty(
           "--primary-color",
           color
         );
-
 
       document.documentElement
         .style
@@ -4205,23 +4025,19 @@
           )
         );
 
-
       const picker =
         document.getElementById(
           "businessColor"
         );
-
 
       const colorValue =
         document.getElementById(
           "colorValue"
         );
 
-
       if (picker)
         picker.value =
           color;
-
 
       if (colorValue)
         colorValue.textContent =
@@ -4237,10 +4053,8 @@
           "businessColor"
         ).value;
 
-
       business.color =
         color;
-
 
       applyPrimaryColor();
 
@@ -4258,7 +4072,6 @@
           BUSINESS_KEY
         );
 
-
       if (saved) {
 
         business = {
@@ -4274,12 +4087,10 @@
 
       }
 
-
       document.getElementById(
         "businessName"
       ).value =
         business.name || "";
-
 
       document.getElementById(
         "businessCurrency"
@@ -4287,13 +4098,11 @@
         business.currency ||
         "Q";
 
-
       document.getElementById(
         "businessColor"
       ).value =
         business.color ||
         "#8b73c7";
-
 
       updateBusinessUI();
 
@@ -4312,14 +4121,12 @@
           .value
           .trim();
 
-
       business.color =
         document
           .getElementById(
             "businessColor"
           )
           .value;
-
 
       business.currency =
         document
@@ -4328,7 +4135,6 @@
           )
           .value;
 
-
       localStorage.setItem(
         BUSINESS_KEY,
         JSON.stringify(
@@ -4336,11 +4142,9 @@
         )
       );
 
-
       updateBusinessUI();
 
       applyPrimaryColor();
-
 
       alert(
         "✅ Datos del negocio guardados."
@@ -4358,14 +4162,12 @@
           )
           .value;
 
-
       localStorage.setItem(
         BUSINESS_KEY,
         JSON.stringify(
           business
         )
       );
-
 
       updateBusinessUI();
 
@@ -4380,18 +4182,15 @@
         business.name ||
         "Dulce Costeo";
 
-
       document.getElementById(
         "headerBusinessName"
       ).textContent =
         name;
 
-
       document.getElementById(
         "footerBusinessName"
       ).textContent =
         name;
-
 
       document.getElementById(
         "previewName"
@@ -4399,12 +4198,10 @@
         business.name ||
         "Tu negocio";
 
-
       const previewInfo =
         document.getElementById(
           "previewInfo"
         );
-
 
       if (previewInfo) {
 
@@ -4415,18 +4212,15 @@
 
       }
 
-
       updateLogo(
         "headerLogo",
         business.logo
       );
 
-
       updateLogo(
         "previewLogo",
         business.logo
       );
-
 
       updateLogo(
         "footerLogo",
@@ -4446,19 +4240,20 @@
           elementId
         );
 
-
       if (!element) return;
-
 
       if (logo) {
 
         element.innerHTML =
-          `<img src="${logo}" alt="Logo del negocio">`;
+          `<img
+            src="${escapeHtmlAttribute(logo)}"
+            alt="Logo del negocio"
+          >`;
 
       } else {
 
         element.innerHTML =
-          cupcakeSvg();
+          defaultLogoHtml();
 
       }
 
@@ -4472,9 +4267,7 @@
       const file =
         event.target.files[0];
 
-
       if (!file) return;
-
 
       if (
         !file.type.startsWith(
@@ -4490,10 +4283,8 @@
 
       }
 
-
       const reader =
         new FileReader();
-
 
       reader.onload =
         function(e) {
@@ -4501,9 +4292,7 @@
           business.logo =
             e.target.result;
 
-
           updateBusinessUI();
-
 
           localStorage.setItem(
             BUSINESS_KEY,
@@ -4513,7 +4302,6 @@
           );
 
         };
-
 
       reader.readAsDataURL(
         file
@@ -4573,7 +4361,6 @@
           []
         );
 
-
       normalizeIngredients();
 
       saveIngredients();
@@ -4602,14 +4389,12 @@
           "newIngredientName"
         ).value.trim();
 
-
       const price =
         Number(
           document.getElementById(
             "newIngredientPrice"
           ).value
         );
-
 
       const quantity =
         Number(
@@ -4618,12 +4403,10 @@
           ).value
         );
 
-
       const unit =
         document.getElementById(
           "newIngredientUnit"
         ).value;
-
 
       if (!name) {
 
@@ -4634,7 +4417,6 @@
         return;
 
       }
-
 
       if (
         !Number.isFinite(price) ||
@@ -4649,7 +4431,6 @@
 
       }
 
-
       if (
         !Number.isFinite(quantity) ||
         quantity <= 0
@@ -4662,7 +4443,6 @@
         return;
 
       }
-
 
       ingredients.push({
 
@@ -4681,7 +4461,6 @@
 
       });
 
-
       saveIngredients();
 
       clearNewIngredientFields();
@@ -4693,7 +4472,6 @@
       renderCostRecipeOptions();
 
       calculateCost();
-
 
       alert(
         "✅ Ingrediente guardado."
@@ -4708,22 +4486,18 @@
         "newIngredientName"
       ).value = "";
 
-
       document.getElementById(
         "newIngredientPrice"
       ).value = "";
-
 
       document.getElementById(
         "newIngredientQuantity"
       ).value = "";
 
-
       document.getElementById(
         "newIngredientUnit"
       ).value =
         "lb";
-
 
       document.getElementById(
         "newIngredientName"
@@ -4741,7 +4515,6 @@
           "ingredientList"
         );
 
-
       if (!ingredients.length) {
 
         container.innerHTML =
@@ -4754,12 +4527,10 @@
 
       }
 
-
       const sortedIngredients =
         sortByName(
           ingredients
         );
-
 
       container.innerHTML =
         sortedIngredients
@@ -4770,12 +4541,11 @@
                 ingredient.id ===
                 editingId;
 
-
               return `
 
                 <div
                   class="ingredient-row"
-                  data-id="${ingredient.id}"
+                  data-id="${escapeHtmlAttribute(ingredient.id)}"
                 >
 
                   <div class="ingredient-fields">
@@ -4796,7 +4566,6 @@
 
                     </div>
 
-
                     <div class="form-group">
 
                       <label>
@@ -4815,7 +4584,6 @@
 
                     </div>
 
-
                     <div class="form-group">
 
                       <label>
@@ -4833,7 +4601,6 @@
                       />
 
                     </div>
-
 
                     <div class="form-group">
 
@@ -4856,7 +4623,6 @@
 
                   </div>
 
-
                   <div class="ingredient-actions">
 
                     ${
@@ -4866,14 +4632,14 @@
 
                         <button
                           class="btn btn-success btn-small"
-                          onclick="saveIngredient('${ingredient.id}')"
+                          onclick="saveIngredient('${escapeHtmlAttribute(ingredient.id)}')"
                         >
                           💾 Guardar
                         </button>
 
                         <button
                           class="btn btn-secondary btn-small"
-                          onclick="cancelIngredientEdit('${ingredient.id}')"
+                          onclick="cancelIngredientEdit()"
                         >
                           Cancelar
                         </button>
@@ -4884,7 +4650,7 @@
 
                         <button
                           class="btn btn-secondary btn-small"
-                          onclick="editIngredient('${ingredient.id}')"
+                          onclick="editIngredient('${escapeHtmlAttribute(ingredient.id)}')"
                         >
                           ✏️ Editar
                         </button>
@@ -4892,10 +4658,9 @@
                       `
                     }
 
-
                     <button
                       class="btn btn-danger btn-small"
-                      onclick="deleteIngredient('${ingredient.id}')"
+                      onclick="deleteIngredient('${escapeHtmlAttribute(ingredient.id)}')"
                     >
                       🗑️ Eliminar
                     </button>
@@ -4917,12 +4682,10 @@
 
       renderIngredients(id);
 
-
       const row =
         document.querySelector(
-          `.ingredient-row[data-id="${id}"]`
+          `.ingredient-row[data-id="${CSS.escape(id)}"]`
         );
-
 
       if (row) {
 
@@ -4930,7 +4693,6 @@
           row.querySelector(
             ".ingredient-name"
           );
-
 
         if (input) {
 
@@ -4954,18 +4716,15 @@
 
       const row =
         document.querySelector(
-          `.ingredient-row[data-id="${id}"]`
+          `.ingredient-row[data-id="${CSS.escape(id)}"]`
         );
 
-
       if (!row) return;
-
 
       const name =
         row.querySelector(
           ".ingredient-name"
         ).value.trim();
-
 
       const price =
         Number(
@@ -4974,7 +4733,6 @@
           ).value
         );
 
-
       const quantity =
         Number(
           row.querySelector(
@@ -4982,12 +4740,10 @@
           ).value
         );
 
-
       const unit =
         row.querySelector(
           ".ingredient-unit"
         ).value;
-
 
       if (!name) {
 
@@ -4998,7 +4754,6 @@
         return;
 
       }
-
 
       if (
         !Number.isFinite(price) ||
@@ -5013,7 +4768,6 @@
 
       }
 
-
       if (
         !Number.isFinite(quantity) ||
         quantity <= 0
@@ -5027,16 +4781,13 @@
 
       }
 
-
       const index =
         ingredients.findIndex(
           item =>
             item.id === id
         );
 
-
       if (index === -1) return;
-
 
       ingredients[index] = {
 
@@ -5052,7 +4803,6 @@
 
       };
 
-
       saveIngredients();
 
       renderIngredients();
@@ -5062,7 +4812,6 @@
       renderCostRecipeOptions();
 
       calculateCost();
-
 
       alert(
         "✅ Ingrediente actualizado."
@@ -5079,9 +4828,7 @@
             item.id === id
         );
 
-
       if (!ingredient) return;
-
 
       const affectedRecipes =
         recipes.filter(
@@ -5098,7 +4845,6 @@
             )
         );
 
-
       if (affectedRecipes.length) {
 
         const recipeNames =
@@ -5108,7 +4854,6 @@
                 `• ${recipe.name}`
             )
             .join("\n");
-
 
         const confirmed =
           confirm(
@@ -5120,7 +4865,6 @@
             `¿Deseas eliminarlo de todas formas?`
           );
 
-
         if (!confirmed) return;
 
       } else {
@@ -5130,18 +4874,15 @@
             `¿Eliminar "${ingredient.name}"?`
           );
 
-
         if (!confirmed) return;
 
       }
-
 
       ingredients =
         ingredients.filter(
           item =>
             item.id !== id
         );
-
 
       saveIngredients();
 
@@ -5152,7 +4893,6 @@
       renderCostRecipeOptions();
 
       calculateCost();
-
 
       if (affectedRecipes.length) {
 
@@ -5192,7 +4932,6 @@
         ["docena", "Docena"]
 
       ];
-
 
       return units
         .map(
@@ -5267,7 +5006,6 @@
           []
         );
 
-
       normalizeRecipes();
 
       saveRecipes();
@@ -5298,39 +5036,32 @@
           "recipeIngredients"
         );
 
-
       if (!ingredients.length) {
 
         alert(
           "Primero agrega al menos un ingrediente en la sección Ingredientes."
         );
 
-
         showSection(
           "ingredientsSection"
         );
 
-
         return;
 
       }
-
 
       const row =
         document.createElement(
           "div"
         );
 
-
       row.className =
         "recipe-ingredient-row";
-
 
       const sortedIngredients =
         sortByName(
           ingredients
         );
-
 
       row.innerHTML = `
 
@@ -5350,7 +5081,7 @@
               .map(
                 ingredient =>
                   `<option
-                    value="${ingredient.id}"
+                    value="${escapeHtmlAttribute(ingredient.id)}"
                     ${ingredient.id === ingredientId ? "selected" : ""}
                   >
                     ${escapeHtml(
@@ -5364,7 +5095,6 @@
 
         </div>
 
-
         <div class="form-group">
 
           <label>
@@ -5377,12 +5107,11 @@
             min="0"
             step="0.001"
             inputmode="decimal"
-            value="${quantity}"
+            value="${escapeHtmlAttribute(quantity)}"
             placeholder="Ej. 250"
           />
 
         </div>
-
 
         <div class="form-group">
 
@@ -5400,7 +5129,6 @@
 
         </div>
 
-
         <button
           type="button"
           class="btn btn-danger btn-small remove-row"
@@ -5410,7 +5138,6 @@
         </button>
 
       `;
-
 
       container.appendChild(
         row
@@ -5426,13 +5153,10 @@
           "recipeIngredients"
         );
 
-
       if (!container) return;
-
 
       container.innerHTML =
         "";
-
 
       if (ingredients.length) {
 
@@ -5450,9 +5174,7 @@
           "#recipeIngredients .recipe-ingredient-row"
         );
 
-
       const result = [];
-
 
       rows.forEach(
         row => {
@@ -5462,7 +5184,6 @@
               ".recipe-ingredient"
             ).value;
 
-
           const quantity =
             Number(
               row.querySelector(
@@ -5470,12 +5191,10 @@
               ).value
             );
 
-
           const unit =
             row.querySelector(
               ".recipe-unit"
             ).value;
-
 
           if (
             ingredientId &&
@@ -5491,7 +5210,6 @@
                   item.id ===
                   ingredientId
               );
-
 
             if (ingredient) {
 
@@ -5515,7 +5233,6 @@
         }
       );
 
-
       return result;
 
     }
@@ -5531,14 +5248,12 @@
           .value
           .trim();
 
-
       const recipeYield =
         Number(
           document.getElementById(
             "recipeYield"
           ).value
         );
-
 
       const preparation =
         document
@@ -5548,10 +5263,8 @@
           .value
           .trim();
 
-
       const recipeIngredients =
         getRecipeIngredientData();
-
 
       if (!name) {
 
@@ -5562,7 +5275,6 @@
         return;
 
       }
-
 
       if (
         !Number.isFinite(
@@ -5579,7 +5291,6 @@
 
       }
 
-
       if (
         !recipeIngredients.length
       ) {
@@ -5591,7 +5302,6 @@
         return;
 
       }
-
 
       const recipeData = {
 
@@ -5607,12 +5317,10 @@
 
       };
 
-
       const wasEditing =
         Boolean(
           editingRecipeId
         );
-
 
       if (editingRecipeId) {
 
@@ -5622,7 +5330,6 @@
               recipe.id ===
               editingRecipeId
           );
-
 
         if (index !== -1) {
 
@@ -5651,7 +5358,6 @@
 
       }
 
-
       saveRecipes();
 
       renderSavedRecipes();
@@ -5659,7 +5365,6 @@
       renderCostRecipeOptions();
 
       clearRecipeFields();
-
 
       alert(
         wasEditing
@@ -5680,25 +5385,20 @@
             item.id === id
         );
 
-
       if (!recipe) return;
-
 
       editingRecipeId =
         id;
-
 
       document.getElementById(
         "recipeName"
       ).value =
         recipe.name;
 
-
       document.getElementById(
         "recipeYield"
       ).value =
         recipe.yield;
-
 
       document.getElementById(
         "recipePreparation"
@@ -5706,16 +5406,13 @@
         recipe.preparation ||
         "";
 
-
       const container =
         document.getElementById(
           "recipeIngredients"
         );
 
-
       container.innerHTML =
         "";
-
 
       recipe.ingredients.forEach(
         item => {
@@ -5723,7 +5420,6 @@
           let ingredientId =
             item.ingredientId ||
             "";
-
 
           if (
             !ingredientId &&
@@ -5737,7 +5433,6 @@
                   item.ingredient
               );
 
-
             if (found) {
 
               ingredientId =
@@ -5746,7 +5441,6 @@
             }
 
           }
-
 
           addRecipeIngredientRow(
             ingredientId,
@@ -5757,7 +5451,6 @@
         }
       );
 
-
       if (
         !recipe.ingredients.length
       ) {
@@ -5766,23 +5459,19 @@
 
       }
 
-
       document.getElementById(
         "recipeFormTitle"
       ).textContent =
         "✏️ Editando receta";
-
 
       document.getElementById(
         "saveRecipeButton"
       ).textContent =
         "💾 Actualizar receta";
 
-
       showSection(
         "recipesSection"
       );
-
 
       window.scrollTo({
         top: 0,
@@ -5797,36 +5486,30 @@
       editingRecipeId =
         null;
 
-
       document.getElementById(
         "recipeName"
       ).value =
         "";
-
 
       document.getElementById(
         "recipeYield"
       ).value =
         "";
 
-
       document.getElementById(
         "recipePreparation"
       ).value =
         "";
-
 
       document.getElementById(
         "recipeFormTitle"
       ).textContent =
         "🎂 Nueva receta";
 
-
       document.getElementById(
         "saveRecipeButton"
       ).textContent =
         "💾 Guardar receta";
-
 
       renderRecipeIngredientRows();
 
@@ -5841,9 +5524,7 @@
             item.id === id
         );
 
-
       if (!recipe) return;
-
 
       if (
         !confirm(
@@ -5855,20 +5536,17 @@
 
       }
 
-
       recipes =
         recipes.filter(
           item =>
             item.id !== id
         );
 
-
       saveRecipes();
 
       renderSavedRecipes();
 
       renderCostRecipeOptions();
-
 
       if (
         editingRecipeId === id
@@ -5888,7 +5566,6 @@
           "savedRecipes"
         );
 
-
       if (!recipes.length) {
 
         container.innerHTML =
@@ -5900,12 +5577,10 @@
 
       }
 
-
       const sortedRecipes =
         sortByName(
           recipes
         );
-
 
       container.innerHTML =
         sortedRecipes
@@ -5915,14 +5590,12 @@
               const ingredientCount =
                 recipe.ingredients.length;
 
-
               const ingredientText =
                 ingredientCount === 1
                   ?
                   "ingrediente"
                   :
                   "ingredientes";
-
 
               return `
 
@@ -5943,6 +5616,7 @@
                       <div class="saved-recipe-info">
 
                         Rinde ${recipe.yield}
+
                         ${
                           recipe.yield == 1
                             ?
@@ -5958,20 +5632,18 @@
 
                     </div>
 
-
                     <div class="saved-recipe-actions">
 
                       <button
                         class="btn btn-secondary btn-small"
-                        onclick="loadRecipe('${recipe.id}')"
+                        onclick="loadRecipe('${escapeHtmlAttribute(recipe.id)}')"
                       >
                         ✏️ Editar
                       </button>
 
-
                       <button
                         class="btn btn-danger btn-small"
-                        onclick="deleteRecipe('${recipe.id}')"
+                        onclick="deleteRecipe('${escapeHtmlAttribute(recipe.id)}')"
                       >
                         🗑️ Eliminar
                       </button>
@@ -5979,7 +5651,6 @@
                     </div>
 
                   </div>
-
 
                   ${
                     recipe.preparation
@@ -6027,19 +5698,15 @@
           "costRecipe"
         );
 
-
       if (!select) return;
-
 
       const current =
         select.value;
-
 
       const sortedRecipes =
         sortByName(
           recipes
         );
-
 
       select.innerHTML =
         `<option value="">
@@ -6049,7 +5716,7 @@
           .map(
             recipe =>
               `<option
-                value="${recipe.id}"
+                value="${escapeHtmlAttribute(recipe.id)}"
               >
                 ${escapeHtml(
                   recipe.name
@@ -6057,7 +5724,6 @@
               </option>`
           )
           .join("");
-
 
       if (
         recipes.some(
@@ -6080,22 +5746,16 @@
     ) {
 
       const weightUnits = [
-
         "g",
         "kg",
         "lb",
         "oz"
-
       ];
-
 
       const countUnits = [
-
         "unidad",
         "docena"
-
       ];
-
 
       if (
         weightUnits.includes(
@@ -6107,7 +5767,6 @@
 
       }
 
-
       if (
         countUnits.includes(
           unit
@@ -6117,7 +5776,6 @@
         return "count";
 
       }
-
 
       return null;
 
@@ -6168,7 +5826,6 @@
             recipeIngredient.ingredientId
         );
 
-
       if (
         !ingredient &&
         recipeIngredient.ingredient
@@ -6183,7 +5840,6 @@
 
       }
 
-
       if (!ingredient) {
 
         return {
@@ -6197,18 +5853,15 @@
 
       }
 
-
       const purchaseCategory =
         getUnitCategory(
           ingredient.unit
         );
 
-
       const recipeCategory =
         getUnitCategory(
           recipeIngredient.unit
         );
-
 
       if (
         purchaseCategory !==
@@ -6226,20 +5879,17 @@
 
       }
 
-
       const purchaseBaseQuantity =
         toBaseQuantity(
           ingredient.quantity,
           ingredient.unit
         );
 
-
       const usedBaseQuantity =
         toBaseQuantity(
           recipeIngredient.quantity,
           recipeIngredient.unit
         );
-
 
       if (
         purchaseBaseQuantity <= 0
@@ -6256,11 +5906,9 @@
 
       }
 
-
       const costPerBaseUnit =
         ingredient.price /
         purchaseBaseQuantity;
-
 
       return {
 
@@ -6282,7 +5930,6 @@
         business.currency ||
         "Q";
 
-
       return (
         symbol +
         Number(
@@ -6300,18 +5947,15 @@
           "costRecipe"
         ).value;
 
-
       const result =
         document.getElementById(
           "costResult"
         );
 
-
       const warning =
         document.getElementById(
           "costWarning"
         );
-
 
       if (!recipeId) {
 
@@ -6325,14 +5969,12 @@
 
       }
 
-
       const recipe =
         recipes.find(
           item =>
             item.id ===
             recipeId
         );
-
 
       if (!recipe) {
 
@@ -6346,12 +5988,10 @@
 
       }
 
-
       let ingredientTotal =
         0;
 
       const warnings = [];
-
 
       recipe.ingredients.forEach(
         item => {
@@ -6361,10 +6001,8 @@
               item
             );
 
-
           ingredientTotal +=
             calculation.cost;
-
 
           if (
             calculation.warning
@@ -6379,12 +6017,10 @@
         }
       );
 
-
       if (warnings.length) {
 
         result.style.display =
           "none";
-
 
         warning.innerHTML =
           `<strong>⚠️ Costeo incompleto</strong><br><br>` +
@@ -6400,15 +6036,12 @@
           `<br><br>` +
           `Corrige la receta o vuelve a agregar el ingrediente faltante para obtener un costeo exacto.`;
 
-
         warning.style.display =
           "block";
-
 
         return;
 
       }
-
 
       const packagingPerUnit =
         Number(
@@ -6417,14 +6050,12 @@
           ).value
         ) || 0;
 
-
       const gas =
         Number(
           document.getElementById(
             "gasCost"
           ).value
         ) || 0;
-
 
       const electricity =
         Number(
@@ -6433,14 +6064,12 @@
           ).value
         ) || 0;
 
-
       const labor =
         Number(
           document.getElementById(
             "laborCost"
           ).value
         ) || 0;
-
 
       const other =
         Number(
@@ -6449,7 +6078,6 @@
           ).value
         ) || 0;
 
-
       const margin =
         Number(
           document.getElementById(
@@ -6457,22 +6085,18 @@
           ).value
         ) || 0;
 
-
       const yieldAmount =
         Number(
           recipe.yield
         ) || 1;
 
-
       const packagingTotal =
         packagingPerUnit *
         yieldAmount;
 
-
       const utilities =
         gas +
         electricity;
-
 
       const totalCost =
         ingredientTotal +
@@ -6481,26 +6105,21 @@
         labor +
         other;
 
-
       const costPerUnit =
         totalCost /
         yieldAmount;
-
 
       const salePrice =
         costPerUnit *
         (1 + margin / 100);
 
-
       const profitPerUnit =
         salePrice -
         costPerUnit;
 
-
       const totalProfit =
         profitPerUnit *
         yieldAmount;
-
 
       document.getElementById(
         "resultIngredients"
@@ -6509,14 +6128,12 @@
           ingredientTotal
         );
 
-
       document.getElementById(
         "resultPackaging"
       ).textContent =
         money(
           packagingTotal
         );
-
 
       document.getElementById(
         "resultUtilities"
@@ -6525,14 +6142,12 @@
           utilities
         );
 
-
       document.getElementById(
         "resultLabor"
       ).textContent =
         money(
           labor
         );
-
 
       document.getElementById(
         "resultOther"
@@ -6541,14 +6156,12 @@
           other
         );
 
-
       document.getElementById(
         "resultTotal"
       ).textContent =
         money(
           totalCost
         );
-
 
       document.getElementById(
         "resultPerUnit"
@@ -6557,14 +6170,12 @@
           costPerUnit
         );
 
-
       document.getElementById(
         "resultSalePrice"
       ).textContent =
         money(
           salePrice
         );
-
 
       document.getElementById(
         "resultProfitPerUnit"
@@ -6573,7 +6184,6 @@
           profitPerUnit
         );
 
-
       document.getElementById(
         "resultTotalProfit"
       ).textContent =
@@ -6581,10 +6191,8 @@
           totalProfit
         );
 
-
       result.style.display =
         "block";
-
 
       warning.style.display =
         "none";
@@ -6644,19 +6252,17 @@
       "DOMContentLoaded",
       async () => {
 
-        const cupcakeTargets = [
+        /* Logo predeterminado */
 
-          "loadingIcon",
+        const logoTargets = [
           "landingLogo",
           "loginLogo",
           "registerLogo",
           "forgotLogo",
           "updateLogo"
-
         ];
 
-
-        cupcakeTargets.forEach(
+        logoTargets.forEach(
           id => {
 
             const element =
@@ -6664,16 +6270,20 @@
                 id
               );
 
-
             if (element) {
 
               element.innerHTML =
-                cupcakeSvg();
+                defaultLogoHtml();
 
             }
 
           }
         );
+
+
+        /* Iconos de contraseña */
+
+        initializePasswordButtons();
 
 
         /*
