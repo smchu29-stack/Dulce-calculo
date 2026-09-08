@@ -1,0 +1,17 @@
+{
+  "name": "Dulce Costeo",
+  "short_name": "Dulce Costeo",
+  "description": "Calculadora de costos para repostería y panadería",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f8f5f2",
+  "theme_color": "#333333",
+  "icons": [
+    {
+      "src": "./dulce%20costeo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
