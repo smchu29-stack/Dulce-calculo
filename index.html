@@ -3,17 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Dulce Costeo</title>
-<link rel="manifest" href="./manifest.json" />
-<meta name="theme-color" content="#333333" />
-<link rel="apple-touch-icon" href="./dulce%20costeo.png" />
+
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="theme-color" content="#6d4cc2" />
+  <link rel="apple-touch-icon" href="./dulce%20costeo.png" />
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root {
-      --primary-color: #333333;
-      --primary-light: rgba(51, 51, 51, 0.12);
-      --background: #f8f5f2;
+      --primary-color: #6d4cc2;
+      --primary-light: rgba(109, 76, 194, 0.12);
+      --background: #f8f5fc;
       --card: #ffffff;
       --text: #333333;
       --muted: #777777;
@@ -50,7 +53,45 @@
       min-height: 100vh;
     }
 
-    /* HEADER */
+    /* =========================================================
+       CUPCAKE
+    ========================================================= */
+
+    .cupcake-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .cupcake-svg .frosting {
+      fill: #c9a7ff;
+    }
+
+    .cupcake-svg .frosting-light {
+      fill: #e8d9ff;
+    }
+
+    .cupcake-svg .wrapper {
+      fill: #8d62d8;
+    }
+
+    .cupcake-svg .wrapper-light {
+      fill: #b58eea;
+    }
+
+    .cupcake-svg .cherry {
+      fill: #ef7091;
+    }
+
+    .cupcake-svg .shine {
+      fill: #ffffff;
+      opacity: .75;
+    }
+
+    /* =========================================================
+       HEADER
+    ========================================================= */
+
     header {
       background: white;
       border-bottom: 1px solid var(--border);
@@ -86,7 +127,7 @@
       justify-content: center;
       overflow: hidden;
       flex-shrink: 0;
-      font-size: 26px;
+      padding: 6px;
     }
 
     .brand-logo img {
@@ -125,7 +166,10 @@
       color: var(--danger);
     }
 
-    /* NAVIGATION - NO TOCAR */
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+
     .nav-wrapper {
       max-width: 1100px;
       margin: auto;
@@ -164,7 +208,10 @@
       border-radius: 10px 10px 0 0;
     }
 
-    /* MAIN */
+    /* =========================================================
+       MAIN
+    ========================================================= */
+
     main {
       max-width: 1100px;
       margin: auto;
@@ -189,7 +236,10 @@
       color: var(--muted);
     }
 
-    /* CARDS */
+    /* =========================================================
+       CARDS
+    ========================================================= */
+
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -209,7 +259,10 @@
       margin-bottom: 18px;
     }
 
-    /* FORM */
+    /* =========================================================
+       FORM
+    ========================================================= */
+
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -268,7 +321,10 @@
       font-size: 12px;
     }
 
-    /* BUTTONS */
+    /* =========================================================
+       BUTTONS
+    ========================================================= */
+
     .button-row {
       display: flex;
       flex-wrap: wrap;
@@ -313,7 +369,10 @@
       font-size: 13px;
     }
 
-    /* BUSINESS */
+    /* =========================================================
+       BUSINESS
+    ========================================================= */
+
     .business-preview {
       display: flex;
       align-items: center;
@@ -334,8 +393,8 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      font-size: 30px;
       flex-shrink: 0;
+      padding: 7px;
     }
 
     .preview-logo img {
@@ -362,10 +421,33 @@
     }
 
     #businessColor {
-      width: 52px;
+      appearance: none;
+      -webkit-appearance: none;
+      width: 48px;
       height: 42px;
       padding: 3px;
       cursor: pointer;
+      border: 2px solid white;
+      border-radius: 10px;
+      background: transparent;
+      box-shadow:
+        0 0 0 1px var(--border),
+        var(--shadow);
+      overflow: hidden;
+    }
+
+    #businessColor::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    #businessColor::-webkit-color-swatch {
+      border: none;
+      border-radius: 7px;
+    }
+
+    #businessColor::-moz-color-swatch {
+      border: none;
+      border-radius: 7px;
     }
 
     .color-value {
@@ -373,7 +455,10 @@
       color: var(--muted);
     }
 
-    /* INGREDIENTS */
+    /* =========================================================
+       INGREDIENTS
+    ========================================================= */
+
     .ingredient-list {
       display: flex;
       flex-direction: column;
@@ -410,7 +495,10 @@
       border-radius: 12px;
     }
 
-    /* RECIPES */
+    /* =========================================================
+       RECIPES
+    ========================================================= */
+
     .recipe-ingredient-row {
       display: grid;
       grid-template-columns: 1.5fr .7fr .8fr auto;
@@ -461,7 +549,10 @@
       flex-wrap: wrap;
     }
 
-    /* COSTING */
+    /* =========================================================
+       COSTING
+    ========================================================= */
+
     .cost-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -521,7 +612,10 @@
       line-height: 1.5;
     }
 
-    /* FOOTER */
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
     footer {
       text-align: center;
       padding: 25px 20px;
@@ -539,7 +633,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      padding: 5px;
     }
 
     .footer-logo img {
@@ -548,7 +642,10 @@
       object-fit: contain;
     }
 
-    /* LOADING / LOGIN */
+    /* =========================================================
+       LOADING
+    ========================================================= */
+
     .loading-screen {
       min-height: 100vh;
       display: flex;
@@ -556,20 +653,33 @@
       justify-content: center;
       text-align: center;
       padding: 25px;
+      background:
+        linear-gradient(
+          135deg,
+          #f8f5fc 0%,
+          #eee6fb 50%,
+          #faf7ff 100%
+        );
     }
 
     .loading-card {
       background: white;
-      border-radius: 18px;
-      padding: 30px;
-      box-shadow: var(--shadow);
+      border-radius: 22px;
+      padding: 32px;
+      box-shadow: 0 10px 35px rgba(109,76,194,.12);
       max-width: 400px;
+      width: 100%;
     }
 
     .loading-icon {
-      font-size: 45px;
-      margin-bottom: 12px;
+      width: 75px;
+      height: 75px;
+      margin: 0 auto 14px;
     }
+
+    /* =========================================================
+       LOGIN
+    ========================================================= */
 
     .login-screen {
       min-height: 100vh;
@@ -577,38 +687,55 @@
       align-items: center;
       justify-content: center;
       padding: 25px;
-      background: var(--background);
+      background:
+        linear-gradient(
+          135deg,
+          #f8f5fc 0%,
+          #e9defb 45%,
+          #f7eefc 100%
+        );
     }
 
     .login-card {
       width: 100%;
       max-width: 430px;
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: var(--shadow);
+      background: rgba(255,255,255,.97);
+      border-radius: 24px;
+      padding: 34px;
+      box-shadow: 0 15px 45px rgba(80,50,130,.14);
       text-align: center;
     }
 
     .login-logo {
-      width: 75px;
-      height: 75px;
-      margin: 0 auto 15px;
-      border-radius: 18px;
-      background: var(--primary-light);
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 17px;
+      border-radius: 22px;
+      background: linear-gradient(
+        135deg,
+        #f0e5ff,
+        #e5d4fb
+      );
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 40px;
+      padding: 10px;
     }
 
     .login-card h1 {
       margin: 0 0 7px;
+      font-size: 30px;
+      color: #3e2d61;
     }
 
     .login-card p {
       color: var(--muted);
       margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    .login-card .btn-primary {
+      box-shadow: 0 7px 18px rgba(109,76,194,.22);
     }
 
     .login-message {
@@ -631,8 +758,12 @@
       color: var(--success);
     }
 
-    /* RESPONSIVE */
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
     @media (max-width: 750px) {
+
       .form-grid,
       .cost-grid,
       .result-grid {
@@ -674,6 +805,7 @@
     }
 
     @media (max-width: 480px) {
+
       .ingredient-fields {
         grid-template-columns: 1fr;
       }
@@ -681,35 +813,60 @@
       .recipe-ingredient-row {
         grid-template-columns: 1fr;
       }
+
+      .login-card {
+        padding: 26px 20px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- LOADING -->
+  <!-- =======================================================
+       LOADING
+  ======================================================== -->
+
   <div id="loadingScreen" class="loading-screen">
+
     <div class="loading-card">
-      <div class="loading-icon">🧁</div>
+
+      <div class="loading-icon" id="loadingIcon"></div>
+
       <h2>Abriendo Dulce Costeo...</h2>
+
       <p>Un momento, por favor.</p>
+
     </div>
+
   </div>
 
-  <!-- LOGIN -->
+
+  <!-- =======================================================
+       LOGIN
+  ======================================================== -->
+
   <div id="loginScreen" class="login-screen">
+
     <div class="login-card">
-      <div class="login-logo">🧁</div>
+
+      <div class="login-logo" id="loginLogo"></div>
+
       <h1>Dulce Costeo</h1>
-      <p>Ingresa con tu correo autorizado para continuar.</p>
+
+      <p>
+        Ingresa con tu correo autorizado para continuar.
+      </p>
 
       <div class="form-group">
+
         <input
           type="email"
           id="loginEmail"
           placeholder="tu@email.com"
           autocomplete="email"
         />
+
       </div>
 
       <button
@@ -720,37 +877,66 @@
         ✉️ Enviarme el enlace
       </button>
 
-      <div id="loginMessage" class="login-message"></div>
+      <div
+        id="loginMessage"
+        class="login-message"
+      ></div>
+
     </div>
+
   </div>
 
-  <!-- APP -->
-  <div id="app" class="app" style="display:none;">
+
+  <!-- =======================================================
+       APP
+  ======================================================== -->
+
+  <div
+    id="app"
+    class="app"
+    style="display:none;"
+  >
 
     <header>
+
       <div class="header-main">
 
         <div class="brand">
-          <div class="brand-logo" id="headerLogo">🧁</div>
+
+          <div
+            class="brand-logo"
+            id="headerLogo"
+          ></div>
 
           <div class="brand-text">
-            <div class="brand-title" id="headerBusinessName">
+
+            <div
+              class="brand-title"
+              id="headerBusinessName"
+            >
               Dulce Costeo
             </div>
 
             <div class="brand-subtitle">
               Calcula el costo real de tus recetas
             </div>
+
           </div>
+
         </div>
 
-        <button class="logout-btn" onclick="logout()">
+        <button
+          class="logout-btn"
+          onclick="logout()"
+        >
           Cerrar sesión
         </button>
 
       </div>
 
+
       <div class="nav-wrapper">
+
         <nav class="nav-tabs">
 
           <button
@@ -786,63 +972,110 @@
           </button>
 
         </nav>
+
       </div>
+
     </header>
+
 
     <main>
 
-      <!-- ================= INICIO ================= -->
-      <section id="homeSection" class="app-section active">
+      <!-- ===================================================
+           INICIO
+      ==================================================== -->
 
-        <h1 class="section-title">Inicio</h1>
+      <section
+        id="homeSection"
+        class="app-section active"
+      >
+
+        <h1 class="section-title">
+          Inicio
+        </h1>
+
         <p class="section-description">
           Configura tu negocio y empieza a calcular tus costos.
         </p>
+
 
         <div class="card">
 
           <h2>🏪 Mi negocio</h2>
 
+
           <div class="form-grid">
 
             <div class="form-group">
-              <label for="businessName">Nombre de tu pastelería o panadería</label>
+
+              <label for="businessName">
+                Nombre de tu pastelería o panadería
+              </label>
 
               <input
                 type="text"
                 id="businessName"
                 placeholder="Ej. Dulces de María"
               />
+
             </div>
 
-            <div class="form-group">
-              <label for="businessCurrency">Moneda</label>
 
-              <select id="businessCurrency" onchange="saveCurrency()">
-                <option value="Q">Quetzales (Q)</option>
-                <option value="$">Dólares ($)</option>
+            <div class="form-group">
+
+              <label for="businessCurrency">
+                Moneda
+              </label>
+
+              <select
+                id="businessCurrency"
+                onchange="saveCurrency()"
+              >
+
+                <option value="Q">
+                  Quetzales (Q)
+                </option>
+
+                <option value="$">
+                  Dólares ($)
+                </option>
+
               </select>
+
             </div>
 
+
             <div class="form-group">
-              <label for="businessColor">Color principal</label>
+
+              <label for="businessColor">
+                Color principal
+              </label>
 
               <div class="color-picker-row">
+
                 <input
                   type="color"
                   id="businessColor"
-                  value="#333333"
+                  value="#6d4cc2"
                   onchange="previewBusinessColor()"
                 />
 
-                <span class="color-value" id="colorValue">
-                  #333333
+                <span
+                  class="color-value"
+                  id="colorValue"
+                >
+                  #6D4CC2
                 </span>
+
               </div>
+
             </div>
 
+
             <div class="form-group">
-              <label for="businessLogo">Logotipo</label>
+
+              <label for="businessLogo">
+                Logotipo
+              </label>
 
               <input
                 type="file"
@@ -854,30 +1087,48 @@
               <span class="help-text">
                 Puedes subir el logo de tu pastelería o panadería.
               </span>
+
             </div>
 
           </div>
 
+
           <div class="button-row">
-            <button class="btn btn-primary" onclick="saveBusiness()">
+
+            <button
+              class="btn btn-primary"
+              onclick="saveBusiness()"
+            >
               💾 Guardar negocio
             </button>
+
           </div>
+
 
           <div class="business-preview">
 
-            <div class="preview-logo" id="previewLogo">
-              🧁
-            </div>
+            <div
+              class="preview-logo"
+              id="previewLogo"
+            ></div>
+
 
             <div>
-              <div class="preview-name" id="previewName">
+
+              <div
+                class="preview-name"
+                id="previewName"
+              >
                 Tu negocio
               </div>
 
-              <div class="preview-info">
+              <div
+                class="preview-info"
+                id="previewInfo"
+              >
                 Así aparecerá tu información en Dulce Costeo.
               </div>
+
             </div>
 
           </div>
@@ -887,26 +1138,38 @@
       </section>
 
 
-      <!-- ================= INGREDIENTES ================= -->
-      <section id="ingredientsSection" class="app-section">
+      <!-- ===================================================
+           INGREDIENTES
+      ==================================================== -->
 
-        <h1 class="section-title">Ingredientes</h1>
+      <section
+        id="ingredientsSection"
+        class="app-section"
+      >
+
+        <h1 class="section-title">
+          Ingredientes
+        </h1>
+
         <p class="section-description">
           Registra cuánto compras y cuánto pagas por cada ingrediente.
         </p>
 
-        <!-- FORMULARIO PARA AGREGAR -->
+
         <div class="card">
 
           <h2>➕ Agregar ingrediente</h2>
 
           <p class="help-text">
-            Guarda cada ingrediente por separado. Después podrás editarlo sin afectar a los demás.
+            Guarda cada ingrediente por separado.
+            Después podrás editarlo sin afectar a los demás.
           </p>
+
 
           <div class="ingredient-fields">
 
             <div class="form-group">
+
               <label for="newIngredientName">
                 Ingrediente
               </label>
@@ -916,9 +1179,12 @@
                 id="newIngredientName"
                 placeholder="Ej. Harina"
               />
+
             </div>
 
+
             <div class="form-group">
+
               <label for="newIngredientPrice">
                 Precio
               </label>
@@ -931,9 +1197,12 @@
                 inputmode="decimal"
                 placeholder="Ej. 25"
               />
+
             </div>
 
+
             <div class="form-group">
+
               <label for="newIngredientQuantity">
                 Cantidad
               </label>
@@ -946,26 +1215,51 @@
                 inputmode="decimal"
                 placeholder="Ej. 1"
               />
+
             </div>
 
+
             <div class="form-group">
+
               <label for="newIngredientUnit">
                 Unidad de compra
               </label>
 
               <select id="newIngredientUnit">
-                <option value="lb">Libra (lb)</option>
-                <option value="kg">Kilogramo (kg)</option>
-                <option value="g">Gramo (g)</option>
-                <option value="oz">Onza (oz)</option>
-                <option value="unidad">Unidad</option>
-                <option value="docena">Docena</option>
+
+                <option value="lb">
+                  Libra (lb)
+                </option>
+
+                <option value="kg">
+                  Kilogramo (kg)
+                </option>
+
+                <option value="g">
+                  Gramo (g)
+                </option>
+
+                <option value="oz">
+                  Onza (oz)
+                </option>
+
+                <option value="unidad">
+                  Unidad
+                </option>
+
+                <option value="docena">
+                  Docena
+                </option>
+
               </select>
+
             </div>
 
           </div>
 
+
           <div class="button-row">
+
             <button
               class="btn btn-primary"
               onclick="saveNewIngredient()"
@@ -979,48 +1273,75 @@
             >
               🧹 Limpiar campos
             </button>
+
           </div>
 
         </div>
 
-        <!-- INGREDIENTES GUARDADOS -->
+
         <div class="card">
 
-          <h2>🥣 Mis ingredientes guardados</h2>
+          <h2>
+            🥣 Mis ingredientes guardados
+          </h2>
 
-          <div id="ingredientList" class="ingredient-list"></div>
+          <div
+            id="ingredientList"
+            class="ingredient-list"
+          ></div>
 
         </div>
 
       </section>
 
 
-      <!-- ================= RECETAS ================= -->
-      <section id="recipesSection" class="app-section">
+      <!-- ===================================================
+           RECETAS
+      ==================================================== -->
 
-        <h1 class="section-title">Recetas</h1>
+      <section
+        id="recipesSection"
+        class="app-section"
+      >
+
+        <h1 class="section-title">
+          Recetas
+        </h1>
+
         <p class="section-description">
           Crea tus recetas indicando los ingredientes y cantidades utilizadas.
         </p>
 
+
         <div class="card">
 
-          <h2 id="recipeFormTitle">🎂 Nueva receta</h2>
+          <h2 id="recipeFormTitle">
+            🎂 Nueva receta
+          </h2>
+
 
           <div class="form-grid">
 
             <div class="form-group">
-              <label for="recipeName">Nombre de la receta</label>
+
+              <label for="recipeName">
+                Nombre de la receta
+              </label>
 
               <input
                 type="text"
                 id="recipeName"
                 placeholder="Ej. Pastel de chocolate"
               />
+
             </div>
 
+
             <div class="form-group">
-              <label for="recipeYield">Rendimiento / unidades</label>
+
+              <label for="recipeYield">
+                Rendimiento / unidades
+              </label>
 
               <input
                 type="number"
@@ -1030,9 +1351,12 @@
                 inputmode="decimal"
                 placeholder="Ej. 12"
               />
+
             </div>
 
+
             <div class="form-group full">
+
               <label for="recipePreparation">
                 Preparación / paso a paso
               </label>
@@ -1041,15 +1365,19 @@
                 id="recipePreparation"
                 placeholder="Escribe aquí el paso a paso de la receta..."
               ></textarea>
+
             </div>
 
           </div>
+
 
           <h3 style="margin-top:25px;">
             Ingredientes de la receta
           </h3>
 
+
           <div id="recipeIngredients"></div>
+
 
           <div class="button-row">
 
@@ -1061,6 +1389,7 @@
             </button>
 
           </div>
+
 
           <div class="button-row">
 
@@ -1086,7 +1415,9 @@
 
         <div class="card">
 
-          <h2>📚 Mis recetas guardadas</h2>
+          <h2>
+            📚 Mis recetas guardadas
+          </h2>
 
           <div id="savedRecipes"></div>
 
@@ -1095,21 +1426,35 @@
       </section>
 
 
-      <!-- ================= COSTEAR ================= -->
-      <section id="costingSection" class="app-section">
+      <!-- ===================================================
+           COSTEAR
+      ==================================================== -->
 
-        <h1 class="section-title">Costear</h1>
+      <section
+        id="costingSection"
+        class="app-section"
+      >
+
+        <h1 class="section-title">
+          Costear
+        </h1>
+
         <p class="section-description">
           Calcula cuánto realmente te cuesta producir y cuánto podrías cobrar.
         </p>
 
+
         <div class="card">
 
-          <h2>💰 Calculadora de costos</h2>
+          <h2>
+            💰 Calculadora de costos
+          </h2>
+
 
           <div class="cost-grid">
 
             <div class="form-group full">
+
               <label for="costRecipe">
                 Selecciona una receta
               </label>
@@ -1118,13 +1463,18 @@
                 id="costRecipe"
                 onchange="calculateCost()"
               >
+
                 <option value="">
                   Selecciona una receta
                 </option>
+
               </select>
+
             </div>
 
+
             <div class="form-group">
+
               <label for="packagingCost">
                 Empaque por unidad
               </label>
@@ -1138,9 +1488,12 @@
                 value="0"
                 oninput="calculateCost()"
               />
+
             </div>
 
+
             <div class="form-group">
+
               <label for="gasCost">
                 Gas
               </label>
@@ -1154,9 +1507,12 @@
                 value="0"
                 oninput="calculateCost()"
               />
+
             </div>
 
+
             <div class="form-group">
+
               <label for="electricityCost">
                 Luz / electricidad
               </label>
@@ -1170,9 +1526,12 @@
                 value="0"
                 oninput="calculateCost()"
               />
+
             </div>
 
+
             <div class="form-group">
+
               <label for="laborCost">
                 Mano de obra
               </label>
@@ -1186,9 +1545,12 @@
                 value="0"
                 oninput="calculateCost()"
               />
+
             </div>
 
+
             <div class="form-group">
+
               <label for="otherCost">
                 Otros gastos
               </label>
@@ -1202,9 +1564,12 @@
                 value="0"
                 oninput="calculateCost()"
               />
+
             </div>
 
+
             <div class="form-group">
+
               <label for="profitMargin">
                 Margen de ganancia (%)
               </label>
@@ -1218,116 +1583,188 @@
                 value="30"
                 oninput="calculateCost()"
               />
+
             </div>
 
           </div>
 
-          <div id="costWarning" class="warning"></div>
 
-          <div id="costResult" class="cost-result" style="display:none;">
+          <div
+            id="costWarning"
+            class="warning"
+          ></div>
 
-            <h3>📊 Resultado</h3>
+
+          <div
+            id="costResult"
+            class="cost-result"
+            style="display:none;"
+          >
+
+            <h3>
+              📊 Resultado
+            </h3>
+
 
             <div class="result-grid">
 
               <div class="result-item">
+
                 <div class="result-label">
                   Costo de ingredientes
                 </div>
 
-                <div class="result-value" id="resultIngredients">
+                <div
+                  class="result-value"
+                  id="resultIngredients"
+                >
                   Q0.00
                 </div>
+
               </div>
 
+
               <div class="result-item">
+
                 <div class="result-label">
                   Costo de empaque
                 </div>
 
-                <div class="result-value" id="resultPackaging">
+                <div
+                  class="result-value"
+                  id="resultPackaging"
+                >
                   Q0.00
                 </div>
+
               </div>
 
+
               <div class="result-item">
+
                 <div class="result-label">
                   Gas + luz
                 </div>
 
-                <div class="result-value" id="resultUtilities">
+                <div
+                  class="result-value"
+                  id="resultUtilities"
+                >
                   Q0.00
                 </div>
+
               </div>
 
+
               <div class="result-item">
+
                 <div class="result-label">
                   Mano de obra
                 </div>
 
-                <div class="result-value" id="resultLabor">
+                <div
+                  class="result-value"
+                  id="resultLabor"
+                >
                   Q0.00
                 </div>
+
               </div>
 
+
               <div class="result-item">
+
                 <div class="result-label">
                   Otros gastos
                 </div>
 
-                <div class="result-value" id="resultOther">
+                <div
+                  class="result-value"
+                  id="resultOther"
+                >
                   Q0.00
                 </div>
+
               </div>
 
+
               <div class="result-item">
+
                 <div class="result-label">
                   Costo total de la receta
                 </div>
 
-                <div class="result-value" id="resultTotal">
+                <div
+                  class="result-value"
+                  id="resultTotal"
+                >
                   Q0.00
                 </div>
+
               </div>
 
+
               <div class="result-item">
+
                 <div class="result-label">
                   Costo por unidad
                 </div>
 
-                <div class="result-value" id="resultPerUnit">
+                <div
+                  class="result-value"
+                  id="resultPerUnit"
+                >
                   Q0.00
                 </div>
+
               </div>
 
+
               <div class="result-item highlight">
+
                 <div class="result-label">
                   Precio sugerido por unidad
                 </div>
 
-                <div class="result-value" id="resultSalePrice">
+                <div
+                  class="result-value"
+                  id="resultSalePrice"
+                >
                   Q0.00
                 </div>
+
               </div>
 
+
               <div class="result-item highlight">
+
                 <div class="result-label">
                   Ganancia por unidad
                 </div>
 
-                <div class="result-value" id="resultProfitPerUnit">
+                <div
+                  class="result-value"
+                  id="resultProfitPerUnit"
+                >
                   Q0.00
                 </div>
+
               </div>
 
+
               <div class="result-item highlight">
+
                 <div class="result-label">
                   Ganancia total
                 </div>
 
-                <div class="result-value" id="resultTotalProfit">
+                <div
+                  class="result-value"
+                  id="resultTotalProfit"
+                >
                   Q0.00
                 </div>
+
               </div>
 
             </div>
@@ -1340,16 +1777,20 @@
 
     </main>
 
+
     <footer>
 
-      <div class="footer-logo" id="footerLogo">
-        🧁
-      </div>
+      <div
+        class="footer-logo"
+        id="footerLogo"
+      ></div>
 
       <div>
+
         <strong id="footerBusinessName">
           Dulce Costeo
         </strong>
+
       </div>
 
       <div style="margin-top:4px;">
@@ -1361,7 +1802,122 @@
   </div>
 
 
+  <!-- =======================================================
+       JAVASCRIPT
+  ======================================================== -->
+
   <script>
+
+    /* =========================================================
+       CUPCAKE SVG
+    ========================================================= */
+
+    function cupcakeSvg() {
+
+      return `
+        <svg
+          class="cupcake-svg"
+          viewBox="0 0 120 120"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="Cupcake"
+        >
+
+          <!-- cereza -->
+          <circle
+            class="cherry"
+            cx="62"
+            cy="18"
+            r="7"
+          />
+
+          <path
+            d="M62 12 C62 7 66 5 70 4"
+            fill="none"
+            stroke="#7b5b9b"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          />
+
+          <!-- frosting -->
+          <path
+            class="frosting-light"
+            d="
+              M28 55
+              C25 48 30 42 37 42
+              C34 34 40 28 48 30
+              C50 22 57 18 64 22
+              C70 17 79 20 81 27
+              C90 26 96 33 93 40
+              C101 42 104 50 99 56
+              C96 60 91 62 86 62
+              L37 62
+              C32 62 29 59 28 55
+              Z
+            "
+          />
+
+          <path
+            class="frosting"
+            d="
+              M29 53
+              C32 57 38 58 44 57
+              C49 56 53 58 58 58
+              C63 58 68 55 73 57
+              C79 59 85 57 90 55
+              C95 53 98 55 100 57
+              L95 66
+              L33 66
+              Z
+            "
+          />
+
+          <!-- wrapper -->
+          <path
+            class="wrapper"
+            d="
+              M35 63
+              L89 63
+              L82 100
+              C81 104 77 106 73 106
+              L51 106
+              C47 106 43 104 42 100
+              Z
+            "
+          />
+
+          <!-- líneas del wrapper -->
+          <path
+            class="wrapper-light"
+            d="
+              M45 66 L50 102
+              M56 66 L59 104
+              M68 66 L67 104
+              M80 66 L76 102
+            "
+            fill="none"
+            stroke="#d5b8f3"
+            stroke-width="3"
+            stroke-linecap="round"
+            opacity=".65"
+          />
+
+          <!-- pequeño brillo -->
+          <ellipse
+            class="shine"
+            cx="45"
+            cy="43"
+            rx="6"
+            ry="3"
+            transform="rotate(-25 45 43)"
+          />
+
+        </svg>
+      `;
+
+    }
+
+
     /* =========================================================
        SUPABASE
     ========================================================= */
@@ -1380,175 +1936,207 @@
 
     let checkingUser = false;
 
-   async function checkCurrentUser() {
 
-  if (checkingUser) return;
+    async function checkCurrentUser() {
 
-  checkingUser = true;
+      if (checkingUser) return;
 
-  try {
+      checkingUser = true;
 
-    const {
-      data,
-      error
-    } = await supabaseClient.auth.getUser();
+      try {
 
-    if (error) {
-      throw error;
-    }
+        const {
+          data,
+          error
+        } = await supabaseClient.auth.getUser();
 
-    const user = data.user;
+        if (error) {
+          throw error;
+        }
 
-    if (!user || !user.email) {
-      showLogin();
-      return;
-    }
+        const user = data.user;
 
-    const email =
-      user.email.trim().toLowerCase();
+        if (!user || !user.email) {
 
-    const {
-      data: authorization,
-      error: authorizationError
-    } = await supabaseClient
-      .from("usuarios")
-      .select("id,email,activo,trial_started_at")
-      .eq("email", email)
-      .eq("activo", true)
-      .maybeSingle();
+          showLogin();
 
-    if (authorizationError) {
+          return;
 
-      console.error(
-        "Error consultando autorización:",
-        authorizationError.message
-      );
+        }
 
-      showLogin();
+        const email =
+          user.email
+            .trim()
+            .toLowerCase();
 
-      showLoginMessage(
-        "No pudimos verificar tu autorización. Inténtalo nuevamente.",
-        "error"
-      );
 
-      return;
-    }
+        const {
+          data: authorization,
+          error: authorizationError
+        } = await supabaseClient
+          .from("usuarios")
+          .select(
+            "id,email,activo,trial_started_at"
+          )
+          .eq("email", email)
+          .eq("activo", true)
+          .maybeSingle();
 
-    if (!authorization) {
 
-      await supabaseClient.auth.signOut();
+        if (authorizationError) {
 
-      showLogin();
+          console.error(
+            "Error consultando autorización:",
+            authorizationError.message
+          );
 
-      showLoginMessage(
-        "Este correo no está autorizado para usar Dulce Costeo.",
-        "error"
-      );
+          showLogin();
 
-      return;
-    }
+          showLoginMessage(
+            "No pudimos verificar tu autorización. Inténtalo nuevamente.",
+            "error"
+          );
 
-    /* ==========================================
-       ADMINISTRADORA
-       ========================================== */
+          return;
+        }
 
-    if (authorization.id === 4) {
 
-      showApp();
+        if (!authorization) {
 
-      return;
-    }
+          await supabaseClient.auth.signOut();
 
-    /* ==========================================
-       PRUEBA GRATUITA DE 7 DÍAS
-       ========================================== */
+          showLogin();
 
-    let trialStartedAt =
-      authorization.trial_started_at;
+          showLoginMessage(
+            "Este correo no está autorizado para usar Dulce Costeo.",
+            "error"
+          );
 
-    if (!trialStartedAt) {
+          return;
+        }
 
-      trialStartedAt =
-        new Date().toISOString();
 
-      const {
-        error: trialError
-      } = await supabaseClient
-        .from("usuarios")
-        .update({
-          trial_started_at: trialStartedAt
-        })
-        .eq("id", authorization.id);
+        /* ADMINISTRADORA */
 
-      if (trialError) {
+        if (authorization.id === 4) {
+
+          showApp();
+
+          return;
+
+        }
+
+
+        /* PRUEBA GRATUITA DE 7 DÍAS */
+
+        let trialStartedAt =
+          authorization.trial_started_at;
+
+
+        if (!trialStartedAt) {
+
+          trialStartedAt =
+            new Date().toISOString();
+
+
+          const {
+            error: trialError
+          } = await supabaseClient
+            .from("usuarios")
+            .update({
+              trial_started_at:
+                trialStartedAt
+            })
+            .eq(
+              "id",
+              authorization.id
+            );
+
+
+          if (trialError) {
+
+            console.error(
+              "Error iniciando período de prueba:",
+              trialError.message
+            );
+
+            showLogin();
+
+            showLoginMessage(
+              "No pudimos iniciar tu período de prueba. Inténtalo nuevamente.",
+              "error"
+            );
+
+            return;
+
+          }
+
+        }
+
+
+        const trialStart =
+          new Date(trialStartedAt);
+
+        const now =
+          new Date();
+
+        const difference =
+          now.getTime() -
+          trialStart.getTime();
+
+        const daysUsed =
+          difference /
+          (1000 * 60 * 60 * 24);
+
+
+        if (daysUsed >= 7) {
+
+          await supabaseClient.auth.signOut();
+
+          showLogin();
+
+          showLoginMessage(
+            "Tu período de prueba de 7 días ha terminado. Adquiere tu acceso para continuar usando Dulce Costeo.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        showApp();
+
+      } catch (error) {
 
         console.error(
-          "Error iniciando período de prueba:",
-          trialError.message
+          "Error de autenticación:",
+          error.message
         );
 
         showLogin();
 
-        showLoginMessage(
-          "No pudimos iniciar tu período de prueba. Inténtalo nuevamente.",
-          "error"
-        );
+      } finally {
 
-        return;
+        checkingUser = false;
+
       }
+
     }
 
-    const trialStart =
-      new Date(trialStartedAt);
-
-    const now =
-      new Date();
-
-    const difference =
-      now.getTime() - trialStart.getTime();
-
-    const daysUsed =
-      difference / (1000 * 60 * 60 * 24);
-
-    if (daysUsed >= 7) {
-
-      await supabaseClient.auth.signOut();
-
-      showLogin();
-
-      showLoginMessage(
-        "Tu período de prueba de 7 días ha terminado. Adquiere tu acceso para continuar usando Dulce Costeo.",
-        "error"
-      );
-
-      return;
-    }
-
-    showApp();
-
-  } catch (error) {
-
-    console.error(
-      "Error de autenticación:",
-      error.message
-    );
-
-    showLogin();
-
-  } finally {
-
-    checkingUser = false;
-
-  }
-}
 
     async function sendMagicLink() {
 
       const emailInput =
-        document.getElementById("loginEmail");
+        document.getElementById(
+          "loginEmail"
+        );
 
       const email =
-        emailInput.value.trim().toLowerCase();
+        emailInput.value
+          .trim()
+          .toLowerCase();
+
 
       if (!email) {
 
@@ -1558,36 +2146,45 @@
         );
 
         return;
+
       }
+
 
       showLoginMessage(
         "Enviando enlace...",
         "success"
       );
 
+
       try {
 
         const {
           error
-        } = await supabaseClient.auth.signInWithOtp({
+        } =
+          await supabaseClient.auth.signInWithOtp({
 
-          email,
+            email,
 
-          options: {
-            emailRedirectTo:
-              "https://dulce-calculo.vercel.app/"
-          }
+            options: {
 
-        });
+              emailRedirectTo:
+                "https://dulce-calculo.vercel.app/"
+
+            }
+
+          });
+
 
         if (error) {
           throw error;
         }
 
+
         showLoginMessage(
           "Listo. Revisa tu correo y abre el enlace para entrar.",
           "success"
         );
+
 
       } catch (error) {
 
@@ -1600,45 +2197,73 @@
           "No pudimos enviar el enlace. Inténtalo nuevamente.",
           "error"
         );
+
       }
+
     }
 
 
-    function showLoginMessage(message, type) {
+    function showLoginMessage(
+      message,
+      type
+    ) {
 
       const box =
-        document.getElementById("loginMessage");
+        document.getElementById(
+          "loginMessage"
+        );
 
-      box.textContent = message;
+      box.textContent =
+        message;
 
       box.className =
-        "login-message " + type;
+        "login-message " +
+        type;
+
     }
 
 
     function showLogin() {
 
-      document.getElementById("loadingScreen").style.display =
+      document.getElementById(
+        "loadingScreen"
+      ).style.display =
         "none";
 
-      document.getElementById("app").style.display =
+
+      document.getElementById(
+        "app"
+      ).style.display =
         "none";
 
-      document.getElementById("loginScreen").style.display =
+
+      document.getElementById(
+        "loginScreen"
+      ).style.display =
         "flex";
+
     }
 
 
     function showApp() {
 
-      document.getElementById("loadingScreen").style.display =
+      document.getElementById(
+        "loadingScreen"
+      ).style.display =
         "none";
 
-      document.getElementById("loginScreen").style.display =
+
+      document.getElementById(
+        "loginScreen"
+      ).style.display =
         "none";
 
-      document.getElementById("app").style.display =
+
+      document.getElementById(
+        "app"
+      ).style.display =
         "block";
+
 
       loadBusiness();
 
@@ -1652,7 +2277,10 @@
 
       renderCostRecipeOptions();
 
-      showSection("homeSection");
+      showSection(
+        "homeSection"
+      );
+
     }
 
 
@@ -1661,6 +2289,7 @@
       await supabaseClient.auth.signOut();
 
       location.reload();
+
     }
 
 
@@ -1698,10 +2327,15 @@
 
 
     let business = {
+
       name: "",
-      color: "#333333",
+
+      color: "#6d4cc2",
+
       logo: "",
+
       currency: "Q"
+
     };
 
 
@@ -1712,7 +2346,10 @@
     let editingRecipeId = null;
 
 
-    function safeParse(value, fallback) {
+    function safeParse(
+      value,
+      fallback
+    ) {
 
       try {
 
@@ -1724,11 +2361,15 @@
       } catch {
 
         return fallback;
+
       }
+
     }
 
 
-    function generateId(prefix = "id") {
+    function generateId(
+      prefix = "id"
+    ) {
 
       return (
         prefix +
@@ -1739,6 +2380,7 @@
           .toString(36)
           .substring(2, 9)
       );
+
     }
 
 
@@ -1750,57 +2392,83 @@
 
       return [...list].sort(
         (a, b) =>
-          String(a.name || "").localeCompare(
-            String(b.name || ""),
+          String(
+            a.name || ""
+          ).localeCompare(
+            String(
+              b.name || ""
+            ),
             "es",
             {
-              sensitivity: "base"
+              sensitivity:
+                "base"
             }
           )
       );
+
     }
 
 
     /* =========================================================
        NAVEGACIÓN
-       NO TOCAR
     ========================================================= */
 
-    function showSection(sectionId) {
+    function showSection(
+      sectionId
+    ) {
 
       document
-        .querySelectorAll(".app-section")
-        .forEach(section => {
+        .querySelectorAll(
+          ".app-section"
+        )
+        .forEach(
+          section => {
 
-          section.classList.remove("active");
+            section.classList.remove(
+              "active"
+            );
 
-        });
+          }
+        );
 
 
       const section =
-        document.getElementById(sectionId);
+        document.getElementById(
+          sectionId
+        );
+
 
       if (section) {
-        section.classList.add("active");
+
+        section.classList.add(
+          "active"
+        );
+
       }
 
 
       document
-        .querySelectorAll(".nav-tab")
-        .forEach(button => {
+        .querySelectorAll(
+          ".nav-tab"
+        )
+        .forEach(
+          button => {
 
-          button.classList.toggle(
-            "active",
-            button.dataset.section === sectionId
-          );
+            button.classList.toggle(
+              "active",
+              button.dataset.section ===
+                sectionId
+            );
 
-        });
+          }
+        );
 
 
       window.scrollTo({
         top: 0,
         behavior: "smooth"
       });
+
     }
 
 
@@ -1808,45 +2476,70 @@
        COLOR
     ========================================================= */
 
-    function hexToRgba(hex, alpha) {
+    function hexToRgba(
+      hex,
+      alpha
+    ) {
 
-      hex = hex.replace("#", "");
+      hex =
+        hex.replace(
+          "#",
+          ""
+        );
+
 
       if (hex.length === 3) {
 
         hex =
-          hex[0] + hex[0] +
-          hex[1] + hex[1] +
-          hex[2] + hex[2];
+          hex[0] +
+          hex[0] +
+          hex[1] +
+          hex[1] +
+          hex[2] +
+          hex[2];
 
       }
 
+
       const r =
         parseInt(
-          hex.substring(0, 2),
+          hex.substring(
+            0,
+            2
+          ),
           16
         );
 
       const g =
         parseInt(
-          hex.substring(2, 4),
+          hex.substring(
+            2,
+            4
+          ),
           16
         );
 
       const b =
         parseInt(
-          hex.substring(4, 6),
+          hex.substring(
+            4,
+            6
+          ),
           16
         );
 
+
       return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+
     }
 
 
     function applyPrimaryColor() {
 
       const color =
-        business.color || "#333333";
+        business.color ||
+        "#6d4cc2";
+
 
       document.documentElement.style
         .setProperty(
@@ -1854,10 +2547,14 @@
           color
         );
 
+
       document.documentElement.style
         .setProperty(
           "--primary-light",
-          hexToRgba(color, .12)
+          hexToRgba(
+            color,
+            .12
+          )
         );
 
 
@@ -1866,6 +2563,7 @@
           "businessColor"
         );
 
+
       const colorValue =
         document.getElementById(
           "colorValue"
@@ -1873,7 +2571,10 @@
 
 
       if (picker) {
-        picker.value = color;
+
+        picker.value =
+          color;
+
       }
 
 
@@ -1894,9 +2595,13 @@
           "businessColor"
         ).value;
 
-      business.color = color;
+
+      business.color =
+        color;
+
 
       applyPrimaryColor();
+
     }
 
 
@@ -1915,8 +2620,14 @@
       if (saved) {
 
         business = {
+
           ...business,
-          ...safeParse(saved, {})
+
+          ...safeParse(
+            saved,
+            {}
+          )
+
         };
 
       }
@@ -1937,12 +2648,14 @@
       document.getElementById(
         "businessColor"
       ).value =
-        business.color || "#333333";
+        business.color ||
+        "#6d4cc2";
 
 
       updateBusinessUI();
 
       applyPrimaryColor();
+
     }
 
 
@@ -1971,7 +2684,9 @@
 
       localStorage.setItem(
         BUSINESS_KEY,
-        JSON.stringify(business)
+        JSON.stringify(
+          business
+        )
       );
 
 
@@ -1979,9 +2694,11 @@
 
       applyPrimaryColor();
 
+
       alert(
         "✅ Datos del negocio guardados."
       );
+
     }
 
 
@@ -1995,20 +2712,24 @@
 
       localStorage.setItem(
         BUSINESS_KEY,
-        JSON.stringify(business)
+        JSON.stringify(
+          business
+        )
       );
 
 
       updateBusinessUI();
 
       calculateCost();
+
     }
 
 
     function updateBusinessUI() {
 
       const name =
-        business.name || "Dulce Costeo";
+        business.name ||
+        "Dulce Costeo";
 
 
       document.getElementById(
@@ -2030,19 +2751,24 @@
         "Tu negocio";
 
 
-      if (business.name) {
+      /*
+        Cuando el nombre ya fue guardado,
+        desaparece completamente el mensaje
+        de ayuda.
+      */
 
-        document.querySelector(
-          ".preview-info"
-        ).textContent =
-          "Tu información está guardada en Dulce Costeo.";
+      const previewInfo =
+        document.getElementById(
+          "previewInfo"
+        );
 
-      } else {
 
-        document.querySelector(
-          ".preview-info"
-        ).textContent =
-          "Así aparecerá tu información en Dulce Costeo.";
+      if (previewInfo) {
+
+        previewInfo.style.display =
+          business.name
+            ? "none"
+            : "block";
 
       }
 
@@ -2061,6 +2787,7 @@
         "footerLogo",
         business.logo
       );
+
     }
 
 
@@ -2081,18 +2808,24 @@
       if (logo) {
 
         element.innerHTML =
-          `<img src="${logo}" alt="Logo del negocio">`;
+          `<img
+            src="${logo}"
+            alt="Logo del negocio"
+          >`;
 
       } else {
 
-        element.textContent =
-          "🧁";
+        element.innerHTML =
+          cupcakeSvg();
 
       }
+
     }
 
 
-    function handleLogoUpload(event) {
+    function handleLogoUpload(
+      event
+    ) {
 
       const file =
         event.target.files[0];
@@ -2101,13 +2834,18 @@
       if (!file) return;
 
 
-      if (!file.type.startsWith("image/")) {
+      if (
+        !file.type.startsWith(
+          "image/"
+        )
+      ) {
 
         alert(
           "Selecciona un archivo de imagen."
         );
 
         return;
+
       }
 
 
@@ -2127,13 +2865,18 @@
 
           localStorage.setItem(
             BUSINESS_KEY,
-            JSON.stringify(business)
+            JSON.stringify(
+              business
+            )
           );
 
         };
 
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(
+        file
+      );
+
     }
 
 
@@ -2145,14 +2888,18 @@
 
       ingredients =
         ingredients.map(
-          (ingredient, index) => ({
+          (
+            ingredient,
+            index
+          ) => ({
 
             id:
               ingredient.id ||
               `ingredient_${Date.now()}_${index}`,
 
             name:
-              ingredient.name || "",
+              ingredient.name ||
+              "",
 
             price:
               Number(
@@ -2170,6 +2917,7 @@
 
           })
         );
+
     }
 
 
@@ -2189,6 +2937,7 @@
       saveIngredients();
 
       renderIngredients();
+
     }
 
 
@@ -2196,12 +2945,13 @@
 
       localStorage.setItem(
         INGREDIENTS_KEY,
-        JSON.stringify(ingredients)
+        JSON.stringify(
+          ingredients
+        )
       );
+
     }
 
-
-    /* NUEVO INGREDIENTE */
 
     function saveNewIngredient() {
 
@@ -2243,6 +2993,7 @@
         );
 
         return;
+
       }
 
 
@@ -2256,6 +3007,7 @@
         );
 
         return;
+
       }
 
 
@@ -2269,14 +3021,16 @@
         );
 
         return;
+
       }
 
 
       ingredients.push({
 
-        id: generateId(
-          "ingredient"
-        ),
+        id:
+          generateId(
+            "ingredient"
+          ),
 
         name,
 
@@ -2301,9 +3055,11 @@
 
       calculateCost();
 
+
       alert(
         "✅ Ingrediente guardado."
       );
+
     }
 
 
@@ -2333,6 +3089,7 @@
       document.getElementById(
         "newIngredientName"
       ).focus();
+
     }
 
 
@@ -2355,11 +3112,14 @@
           </div>`;
 
         return;
+
       }
 
 
       const sortedIngredients =
-        sortByName(ingredients);
+        sortByName(
+          ingredients
+        );
 
 
       container.innerHTML =
@@ -2368,7 +3128,8 @@
             ingredient => {
 
               const editing =
-                ingredient.id === editingId;
+                ingredient.id ===
+                editingId;
 
 
               return `
@@ -2381,7 +3142,10 @@
                   <div class="ingredient-fields">
 
                     <div class="form-group">
-                      <label>Ingrediente</label>
+
+                      <label>
+                        Ingrediente
+                      </label>
 
                       <input
                         class="ingredient-name"
@@ -2390,11 +3154,15 @@
                         ${editing ? "" : "disabled"}
                         placeholder="Ej. Harina"
                       />
+
                     </div>
 
 
                     <div class="form-group">
-                      <label>Precio</label>
+
+                      <label>
+                        Precio
+                      </label>
 
                       <input
                         class="ingredient-price"
@@ -2405,11 +3173,15 @@
                         value="${ingredient.price}"
                         ${editing ? "" : "disabled"}
                       />
+
                     </div>
 
 
                     <div class="form-group">
-                      <label>Cantidad</label>
+
+                      <label>
+                        Cantidad
+                      </label>
 
                       <input
                         class="ingredient-quantity"
@@ -2420,11 +3192,15 @@
                         value="${ingredient.quantity}"
                         ${editing ? "" : "disabled"}
                       />
+
                     </div>
 
 
                     <div class="form-group">
-                      <label>Unidad de compra</label>
+
+                      <label>
+                        Unidad de compra
+                      </label>
 
                       <select
                         class="ingredient-unit"
@@ -2436,6 +3212,7 @@
                         )}
 
                       </select>
+
                     </div>
 
                   </div>
@@ -2447,6 +3224,7 @@
                       editing
                       ?
                       `
+
                         <button
                           class="btn btn-success btn-small"
                           onclick="saveIngredient('${ingredient.id}')"
@@ -2460,15 +3238,18 @@
                         >
                           Cancelar
                         </button>
+
                       `
                       :
                       `
+
                         <button
                           class="btn btn-secondary btn-small"
                           onclick="editIngredient('${ingredient.id}')"
                         >
                           ✏️ Editar
                         </button>
+
                       `
                     }
 
@@ -2489,6 +3270,7 @@
             }
           )
           .join("");
+
     }
 
 
@@ -2512,16 +3294,20 @@
 
 
         if (input) {
+
           input.focus();
+
         }
 
       }
+
     }
 
 
-    function cancelIngredientEdit(id) {
+    function cancelIngredientEdit() {
 
       renderIngredients();
+
     }
 
 
@@ -2571,6 +3357,7 @@
         );
 
         return;
+
       }
 
 
@@ -2584,6 +3371,7 @@
         );
 
         return;
+
       }
 
 
@@ -2597,6 +3385,7 @@
         );
 
         return;
+
       }
 
 
@@ -2629,22 +3418,17 @@
 
       renderIngredients();
 
-      /*
-        IMPORTANTE:
-        Las recetas conservan el ingredientId.
-        Por eso, al cambiar precio, cantidad o unidad
-        del ingrediente, el costeo se actualiza automáticamente.
-      */
-
       renderRecipeIngredientRows();
 
       renderCostRecipeOptions();
 
       calculateCost();
 
+
       alert(
         "✅ Ingrediente actualizado."
       );
+
     }
 
 
@@ -2665,7 +3449,8 @@
           recipe =>
             recipe.ingredients.some(
               recipeIngredient =>
-                recipeIngredient.ingredientId === id ||
+                recipeIngredient.ingredientId ===
+                  id ||
                 (
                   recipeIngredient.ingredient &&
                   recipeIngredient.ingredient ===
@@ -2697,9 +3482,7 @@
           );
 
 
-        if (!confirmed) {
-          return;
-        }
+        if (!confirmed) return;
 
       } else {
 
@@ -2709,9 +3492,7 @@
           );
 
 
-        if (!confirmed) {
-          return;
-        }
+        if (!confirmed) return;
 
       }
 
@@ -2783,6 +3564,7 @@
             </option>`
         )
         .join("");
+
     }
 
 
@@ -2794,14 +3576,18 @@
 
       recipes =
         recipes.map(
-          (recipe, index) => ({
+          (
+            recipe,
+            index
+          ) => ({
 
             id:
               recipe.id ||
               `recipe_${Date.now()}_${index}`,
 
             name:
-              recipe.name || "",
+              recipe.name ||
+              "",
 
             yield:
               Number(
@@ -2819,11 +3605,14 @@
               Array.isArray(
                 recipe.ingredients
               )
-              ? recipe.ingredients
-              : []
+              ?
+              recipe.ingredients
+              :
+              []
 
           })
         );
+
     }
 
 
@@ -2841,6 +3630,7 @@
       normalizeRecipes();
 
       saveRecipes();
+
     }
 
 
@@ -2848,8 +3638,11 @@
 
       localStorage.setItem(
         RECIPES_KEY,
-        JSON.stringify(recipes)
+        JSON.stringify(
+          recipes
+        )
       );
+
     }
 
 
@@ -2878,6 +3671,7 @@
 
 
         return;
+
       }
 
 
@@ -2892,14 +3686,18 @@
 
 
       const sortedIngredients =
-        sortByName(ingredients);
+        sortByName(
+          ingredients
+        );
 
 
       row.innerHTML = `
 
         <div class="form-group">
 
-          <label>Ingrediente</label>
+          <label>
+            Ingrediente
+          </label>
 
           <select class="recipe-ingredient">
 
@@ -2928,7 +3726,9 @@
 
         <div class="form-group">
 
-          <label>Cantidad</label>
+          <label>
+            Cantidad
+          </label>
 
           <input
             class="recipe-quantity"
@@ -2945,7 +3745,9 @@
 
         <div class="form-group">
 
-          <label>Unidad</label>
+          <label>
+            Unidad
+          </label>
 
           <select class="recipe-unit">
 
@@ -2969,7 +3771,10 @@
       `;
 
 
-      container.appendChild(row);
+      container.appendChild(
+        row
+      );
+
     }
 
 
@@ -2984,10 +3789,16 @@
       if (!container) return;
 
 
-      container.innerHTML = "";
+      container.innerHTML =
+        "";
 
 
-      addRecipeIngredientRow();
+      if (ingredients.length) {
+
+        addRecipeIngredientRow();
+
+      }
+
     }
 
 
@@ -3027,7 +3838,9 @@
 
           if (
             ingredientId &&
-            Number.isFinite(quantity) &&
+            Number.isFinite(
+              quantity
+            ) &&
             quantity > 0
           ) {
 
@@ -3063,6 +3876,7 @@
 
 
       return result;
+
     }
 
 
@@ -3105,11 +3919,14 @@
         );
 
         return;
+
       }
 
 
       if (
-        !Number.isFinite(recipeYield) ||
+        !Number.isFinite(
+          recipeYield
+        ) ||
         recipeYield <= 0
       ) {
 
@@ -3118,16 +3935,20 @@
         );
 
         return;
+
       }
 
 
-      if (!recipeIngredients.length) {
+      if (
+        !recipeIngredients.length
+      ) {
 
         alert(
           "Agrega al menos un ingrediente con cantidad."
         );
 
         return;
+
       }
 
 
@@ -3201,9 +4022,12 @@
 
       alert(
         wasEditing
-          ? "✅ Receta actualizada."
-          : "✅ Receta guardada."
+          ?
+          "✅ Receta actualizada."
+          :
+          "✅ Receta guardada."
       );
+
     }
 
 
@@ -3219,7 +4043,8 @@
       if (!recipe) return;
 
 
-      editingRecipeId = id;
+      editingRecipeId =
+        id;
 
 
       document.getElementById(
@@ -3247,7 +4072,8 @@
         );
 
 
-      container.innerHTML = "";
+      container.innerHTML =
+        "";
 
 
       recipe.ingredients.forEach(
@@ -3321,27 +4147,32 @@
         top: 0,
         behavior: "smooth"
       });
+
     }
 
 
     function clearRecipeFields() {
 
-      editingRecipeId = null;
+      editingRecipeId =
+        null;
 
 
       document.getElementById(
         "recipeName"
-      ).value = "";
+      ).value =
+        "";
 
 
       document.getElementById(
         "recipeYield"
-      ).value = "";
+      ).value =
+        "";
 
 
       document.getElementById(
         "recipePreparation"
-      ).value = "";
+      ).value =
+        "";
 
 
       document.getElementById(
@@ -3357,6 +4188,7 @@
 
 
       renderRecipeIngredientRows();
+
     }
 
 
@@ -3424,11 +4256,14 @@
           </div>`;
 
         return;
+
       }
 
 
       const sortedRecipes =
-        sortByName(recipes);
+        sortByName(
+          recipes
+        );
 
 
       container.innerHTML =
@@ -3442,8 +4277,10 @@
 
               const ingredientText =
                 ingredientCount === 1
-                  ? "ingrediente"
-                  : "ingredientes";
+                  ?
+                  "ingrediente"
+                  :
+                  "ingredientes";
 
 
               return `
@@ -3455,20 +4292,27 @@
                     <div>
 
                       <div class="saved-recipe-name">
+
                         ${escapeHtml(
                           recipe.name
                         )}
+
                       </div>
 
                       <div class="saved-recipe-info">
+
                         Rinde ${recipe.yield}
                         ${
                           recipe.yield == 1
-                            ? "unidad"
-                            : "unidades"
+                            ?
+                            "unidad"
+                            :
+                            "unidades"
                         }
+
                         · ${ingredientCount}
                         ${ingredientText}
+
                       </div>
 
                     </div>
@@ -3482,6 +4326,7 @@
                       >
                         ✏️ Editar
                       </button>
+
 
                       <button
                         class="btn btn-danger btn-small"
@@ -3499,12 +4344,21 @@
                     recipe.preparation
                     ?
                     `
+
                       <div class="saved-recipe-preparation">
-                        <strong>👩‍🍳 Preparación:</strong><br>
+
+                        <strong>
+                          👩‍🍳 Preparación:
+                        </strong>
+
+                        <br>
+
                         ${escapeHtml(
                           recipe.preparation
                         )}
+
                       </div>
+
                     `
                     :
                     ""
@@ -3517,6 +4371,7 @@
             }
           )
           .join("");
+
     }
 
 
@@ -3540,7 +4395,9 @@
 
 
       const sortedRecipes =
-        sortByName(recipes);
+        sortByName(
+          recipes
+        );
 
 
       select.innerHTML =
@@ -3564,7 +4421,8 @@
       if (
         recipes.some(
           recipe =>
-            recipe.id === current
+            recipe.id ===
+            current
         )
       ) {
 
@@ -3597,7 +4455,9 @@
 
 
       if (
-        weightUnits.includes(unit)
+        weightUnits.includes(
+          unit
+        )
       ) {
 
         return "weight";
@@ -3606,7 +4466,9 @@
 
 
       if (
-        countUnits.includes(unit)
+        countUnits.includes(
+          unit
+        )
       ) {
 
         return "count";
@@ -3615,6 +4477,7 @@
 
 
       return null;
+
     }
 
 
@@ -3779,8 +4642,9 @@
 
       return (
         symbol +
-        Number(value || 0)
-          .toFixed(2)
+        Number(
+          value || 0
+        ).toFixed(2)
       );
 
     }
@@ -3815,13 +4679,15 @@
           "none";
 
         return;
+
       }
 
 
       const recipe =
         recipes.find(
           item =>
-            item.id === recipeId
+            item.id ===
+            recipeId
         );
 
 
@@ -3838,7 +4704,8 @@
       }
 
 
-      let ingredientTotal = 0;
+      let ingredientTotal =
+        0;
 
       const warnings = [];
 
@@ -3870,11 +4737,6 @@
       );
 
 
-      /*
-        SI HAY ALGÚN PROBLEMA:
-        No mostramos precios ni ganancias como si fueran exactos.
-      */
-
       if (warnings.length) {
 
         result.style.display =
@@ -3887,7 +4749,9 @@
           warnings
             .map(
               item =>
-                `• ${escapeHtml(item)}`
+                `• ${escapeHtml(
+                  item
+                )}`
             )
             .join("<br>") +
           `<br><br>` +
@@ -3952,8 +4816,9 @@
 
 
       const yieldAmount =
-        Number(recipe.yield) ||
-        1;
+        Number(
+          recipe.yield
+        ) || 1;
 
 
       const packagingTotal =
@@ -4117,9 +4982,13 @@
     }
 
 
-    function escapeHtmlAttribute(value) {
+    function escapeHtmlAttribute(
+      value
+    ) {
 
-      return escapeHtml(value);
+      return escapeHtml(
+        value
+      );
 
     }
 
@@ -4132,20 +5001,78 @@
       "DOMContentLoaded",
       () => {
 
+        /*
+          Colocamos el cupcake automáticamente
+          en las pantallas donde todavía no hay
+          un logo personalizado.
+        */
+
+        const loadingIcon =
+          document.getElementById(
+            "loadingIcon"
+          );
+
+        if (loadingIcon) {
+          loadingIcon.innerHTML =
+            cupcakeSvg();
+        }
+
+
+        const loginLogo =
+          document.getElementById(
+            "loginLogo"
+          );
+
+        if (loginLogo) {
+          loginLogo.innerHTML =
+            cupcakeSvg();
+        }
+
+
         checkCurrentUser();
 
       }
     );
 
   </script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js')
-        .then(() => console.log('Dulce Costeo: Service Worker registrado'))
-        .catch(error => console.error('Error registrando Service Worker:', error));
-    });
-  }
-</script>
+
+
+  <!-- =======================================================
+       SERVICE WORKER
+  ======================================================== -->
+
+  <script>
+
+    if (
+      "serviceWorker" in navigator
+    ) {
+
+      window.addEventListener(
+        "load",
+        () => {
+
+          navigator.serviceWorker
+            .register("./sw.js")
+            .then(
+              () =>
+                console.log(
+                  "Dulce Costeo: Service Worker registrado"
+                )
+            )
+            .catch(
+              error =>
+                console.error(
+                  "Error registrando Service Worker:",
+                  error
+                )
+            );
+
+        }
+      );
+
+    }
+
+  </script>
+
 </body>
 </html>
