@@ -1380,92 +1380,167 @@
 
     let checkingUser = false;
 
-    async function checkCurrentUser() {
+   async function checkCurrentUser() {
 
-      if (checkingUser) return;
+  if (checkingUser) return;
 
-      checkingUser = true;
+  checkingUser = true;
 
-      try {
+  try {
 
-        const {
-          data,
-          error
-        } = await supabaseClient.auth.getUser();
+    const {
+      data,
+      error
+    } = await supabaseClient.auth.getUser();
 
-        if (error) {
-          throw error;
-        }
+    if (error) {
+      throw error;
+    }
 
-        const user = data.user;
+    const user = data.user;
 
-        if (!user || !user.email) {
-          showLogin();
-          return;
-        }
+    if (!user || !user.email) {
+      showLogin();
+      return;
+    }
 
-        const email =
-          user.email.trim().toLowerCase();
+    const email =
+      user.email.trim().toLowerCase();
 
-        const {
-          data: authorization,
-          error: authorizationError
-        } = await supabaseClient
-          .from("usuarios")
-          .select("id,email,activo")
-          .eq("email", email)
-          .eq("activo", true)
-          .maybeSingle();
+    const {
+      data: authorization,
+      error: authorizationError
+    } = await supabaseClient
+      .from("usuarios")
+      .select("id,email,activo,trial_started_at")
+      .eq("email", email)
+      .eq("activo", true)
+      .maybeSingle();
 
-        if (authorizationError) {
+    if (authorizationError) {
 
-          console.error(
-            "Error consultando autorización:",
-            authorizationError.message
-          );
+      console.error(
+        "Error consultando autorización:",
+        authorizationError.message
+      );
 
-          showLogin();
+      showLogin();
 
-          showLoginMessage(
-            "No pudimos verificar tu autorización. Inténtalo nuevamente.",
-            "error"
-          );
+      showLoginMessage(
+        "No pudimos verificar tu autorización. Inténtalo nuevamente.",
+        "error"
+      );
 
-          return;
-        }
+      return;
+    }
 
-        if (!authorization) {
+    if (!authorization) {
 
-          await supabaseClient.auth.signOut();
+      await supabaseClient.auth.signOut();
 
-          showLogin();
+      showLogin();
 
-          showLoginMessage(
-            "Este correo no está autorizado para usar Dulce Costeo.",
-            "error"
-          );
+      showLoginMessage(
+        "Este correo no está autorizado para usar Dulce Costeo.",
+        "error"
+      );
 
-          return;
-        }
+      return;
+    }
 
-        showApp();
+    /* ==========================================
+       ADMINISTRADORA
+       ========================================== */
 
-      } catch (error) {
+    if (authorization.id === 4) {
+
+      showApp();
+
+      return;
+    }
+
+    /* ==========================================
+       PRUEBA GRATUITA DE 7 DÍAS
+       ========================================== */
+
+    let trialStartedAt =
+      authorization.trial_started_at;
+
+    if (!trialStartedAt) {
+
+      trialStartedAt =
+        new Date().toISOString();
+
+      const {
+        error: trialError
+      } = await supabaseClient
+        .from("usuarios")
+        .update({
+          trial_started_at: trialStartedAt
+        })
+        .eq("id", authorization.id);
+
+      if (trialError) {
 
         console.error(
-          "Error de autenticación:",
-          error.message
+          "Error iniciando período de prueba:",
+          trialError.message
         );
 
         showLogin();
 
-      } finally {
+        showLoginMessage(
+          "No pudimos iniciar tu período de prueba. Inténtalo nuevamente.",
+          "error"
+        );
 
-        checkingUser = false;
-
+        return;
       }
     }
 
+    const trialStart =
+      new Date(trialStartedAt);
+
+    const now =
+      new Date();
+
+    const difference =
+      now.getTime() - trialStart.getTime();
+
+    const daysUsed =
+      difference / (1000 * 60 * 60 * 24);
+
+    if (daysUsed >= 7) {
+
+      await supabaseClient.auth.signOut();
+
+      showLogin();
+
+      showLoginMessage(
+        "Tu período de prueba de 7 días ha terminado. Adquiere tu acceso para continuar usando Dulce Costeo.",
+        "error"
+      );
+
+      return;
+    }
+
+    showApp();
+
+  } catch (error) {
+
+    console.error(
+      "Error de autenticación:",
+      error.message
+    );
+
+    showLogin();
+
+  } finally {
+
+    checkingUser = false;
+
+  }
+}
 
     async function sendMagicLink() {
 
