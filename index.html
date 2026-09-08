@@ -35,7 +35,8 @@
 
     button,
     input,
-    select {
+    select,
+    textarea {
       font: inherit;
     }
 
@@ -122,7 +123,7 @@
       color: var(--danger);
     }
 
-    /* NAVIGATION */
+    /* NAVIGATION - NO TOCAR */
     .nav-wrapper {
       max-width: 1100px;
       margin: auto;
@@ -229,7 +230,8 @@
     }
 
     input,
-    select {
+    select,
+    textarea {
       width: 100%;
       border: 1px solid #d8d2cd;
       border-radius: 10px;
@@ -239,13 +241,22 @@
       outline: none;
     }
 
+    textarea {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.5;
+    }
+
     input:focus,
-    select:focus {
+    select:focus,
+    textarea:focus {
       border-color: var(--primary-color);
       box-shadow: 0 0 0 3px var(--primary-light);
     }
 
-    input:disabled {
+    input:disabled,
+    select:disabled,
+    textarea:disabled {
       background: #f7f5f3;
       color: #555;
     }
@@ -432,6 +443,16 @@
       margin-top: 5px;
     }
 
+    .saved-recipe-preparation {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      color: #555;
+      font-size: 14px;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+
     .saved-recipe-actions {
       display: flex;
       gap: 7px;
@@ -489,12 +510,13 @@
 
     .warning {
       margin-top: 14px;
-      padding: 12px;
+      padding: 14px;
       background: #fff8e5;
       color: #765b15;
       border-radius: 10px;
       font-size: 13px;
       display: none;
+      line-height: 1.5;
     }
 
     /* FOOTER */
@@ -871,22 +893,100 @@
           Registra cuánto compras y cuánto pagas por cada ingrediente.
         </p>
 
+        <!-- FORMULARIO PARA AGREGAR -->
         <div class="card">
 
-          <h2>🥣 Mis ingredientes</h2>
+          <h2>➕ Agregar ingrediente</h2>
 
           <p class="help-text">
-            Cada ingrediente se guarda de forma independiente. Puedes editar
-            solamente el ingrediente que necesites.
+            Guarda cada ingrediente por separado. Después podrás editarlo sin afectar a los demás.
           </p>
 
-          <div id="ingredientList" class="ingredient-list"></div>
+          <div class="ingredient-fields">
+
+            <div class="form-group">
+              <label for="newIngredientName">
+                Ingrediente
+              </label>
+
+              <input
+                type="text"
+                id="newIngredientName"
+                placeholder="Ej. Harina"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="newIngredientPrice">
+                Precio
+              </label>
+
+              <input
+                type="number"
+                id="newIngredientPrice"
+                min="0"
+                step="0.01"
+                inputmode="decimal"
+                placeholder="Ej. 25"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="newIngredientQuantity">
+                Cantidad
+              </label>
+
+              <input
+                type="number"
+                id="newIngredientQuantity"
+                min="0.001"
+                step="0.001"
+                inputmode="decimal"
+                placeholder="Ej. 1"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="newIngredientUnit">
+                Unidad de compra
+              </label>
+
+              <select id="newIngredientUnit">
+                <option value="lb">Libra (lb)</option>
+                <option value="kg">Kilogramo (kg)</option>
+                <option value="g">Gramo (g)</option>
+                <option value="oz">Onza (oz)</option>
+                <option value="unidad">Unidad</option>
+                <option value="docena">Docena</option>
+              </select>
+            </div>
+
+          </div>
 
           <div class="button-row">
-            <button class="btn btn-primary" onclick="addIngredient()">
-              ➕ Agregar ingrediente
+            <button
+              class="btn btn-primary"
+              onclick="saveNewIngredient()"
+            >
+              💾 Guardar ingrediente
+            </button>
+
+            <button
+              class="btn btn-secondary"
+              onclick="clearNewIngredientFields()"
+            >
+              🧹 Limpiar campos
             </button>
           </div>
+
+        </div>
+
+        <!-- INGREDIENTES GUARDADOS -->
+        <div class="card">
+
+          <h2>🥣 Mis ingredientes guardados</h2>
+
+          <div id="ingredientList" class="ingredient-list"></div>
 
         </div>
 
@@ -928,6 +1028,17 @@
                 inputmode="decimal"
                 placeholder="Ej. 12"
               />
+            </div>
+
+            <div class="form-group full">
+              <label for="recipePreparation">
+                Preparación / paso a paso
+              </label>
+
+              <textarea
+                id="recipePreparation"
+                placeholder="Escribe aquí el paso a paso de la receta..."
+              ></textarea>
             </div>
 
           </div>
@@ -1109,9 +1220,7 @@
 
           </div>
 
-
           <div id="costWarning" class="warning"></div>
-
 
           <div id="costResult" class="cost-result" style="display:none;">
 
@@ -1129,7 +1238,6 @@
                 </div>
               </div>
 
-
               <div class="result-item">
                 <div class="result-label">
                   Costo de empaque
@@ -1139,7 +1247,6 @@
                   Q0.00
                 </div>
               </div>
-
 
               <div class="result-item">
                 <div class="result-label">
@@ -1151,7 +1258,6 @@
                 </div>
               </div>
 
-
               <div class="result-item">
                 <div class="result-label">
                   Mano de obra
@@ -1161,7 +1267,6 @@
                   Q0.00
                 </div>
               </div>
-
 
               <div class="result-item">
                 <div class="result-label">
@@ -1173,7 +1278,6 @@
                 </div>
               </div>
 
-
               <div class="result-item">
                 <div class="result-label">
                   Costo total de la receta
@@ -1183,7 +1287,6 @@
                   Q0.00
                 </div>
               </div>
-
 
               <div class="result-item">
                 <div class="result-label">
@@ -1195,7 +1298,6 @@
                 </div>
               </div>
 
-
               <div class="result-item highlight">
                 <div class="result-label">
                   Precio sugerido por unidad
@@ -1206,7 +1308,6 @@
                 </div>
               </div>
 
-
               <div class="result-item highlight">
                 <div class="result-label">
                   Ganancia por unidad
@@ -1216,7 +1317,6 @@
                   Q0.00
                 </div>
               </div>
-
 
               <div class="result-item highlight">
                 <div class="result-label">
@@ -1237,7 +1337,6 @@
       </section>
 
     </main>
-
 
     <footer>
 
@@ -1277,9 +1376,7 @@
         SUPABASE_PUBLISHABLE_KEY
       );
 
-
     let checkingUser = false;
-
 
     async function checkCurrentUser() {
 
@@ -1305,7 +1402,8 @@
           return;
         }
 
-        const email = user.email.trim().toLowerCase();
+        const email =
+          user.email.trim().toLowerCase();
 
         const {
           data: authorization,
@@ -1318,12 +1416,14 @@
           .maybeSingle();
 
         if (authorizationError) {
+
           console.error(
             "Error consultando autorización:",
             authorizationError.message
           );
 
           showLogin();
+
           showLoginMessage(
             "No pudimos verificar tu autorización. Inténtalo nuevamente.",
             "error"
@@ -1494,10 +1594,12 @@
           event === "SIGNED_IN" ||
           event === "INITIAL_SESSION"
         ) {
+
           setTimeout(
             checkCurrentUser,
             100
           );
+
         }
 
       }
@@ -1564,7 +1666,27 @@
 
 
     /* =========================================================
+       ORDEN ALFABÉTICO
+    ========================================================= */
+
+    function sortByName(list) {
+
+      return [...list].sort(
+        (a, b) =>
+          String(a.name || "").localeCompare(
+            String(b.name || ""),
+            "es",
+            {
+              sensitivity: "base"
+            }
+          )
+      );
+    }
+
+
+    /* =========================================================
        NAVEGACIÓN
+       NO TOCAR
     ========================================================= */
 
     function showSection(sectionId) {
@@ -1614,20 +1736,31 @@
       hex = hex.replace("#", "");
 
       if (hex.length === 3) {
+
         hex =
           hex[0] + hex[0] +
           hex[1] + hex[1] +
           hex[2] + hex[2];
+
       }
 
       const r =
-        parseInt(hex.substring(0, 2), 16);
+        parseInt(
+          hex.substring(0, 2),
+          16
+        );
 
       const g =
-        parseInt(hex.substring(2, 4), 16);
+        parseInt(
+          hex.substring(2, 4),
+          16
+        );
 
       const b =
-        parseInt(hex.substring(4, 6), 16);
+        parseInt(
+          hex.substring(4, 6),
+          16
+        );
 
       return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     }
@@ -1652,26 +1785,37 @@
 
 
       const picker =
-        document.getElementById("businessColor");
+        document.getElementById(
+          "businessColor"
+        );
 
       const colorValue =
-        document.getElementById("colorValue");
+        document.getElementById(
+          "colorValue"
+        );
+
 
       if (picker) {
         picker.value = color;
       }
 
+
       if (colorValue) {
+
         colorValue.textContent =
           color.toUpperCase();
+
       }
+
     }
 
 
     function previewBusinessColor() {
 
       const color =
-        document.getElementById("businessColor").value;
+        document.getElementById(
+          "businessColor"
+        ).value;
 
       business.color = color;
 
@@ -1686,7 +1830,10 @@
     function loadBusiness() {
 
       const saved =
-        localStorage.getItem(BUSINESS_KEY);
+        localStorage.getItem(
+          BUSINESS_KEY
+        );
+
 
       if (saved) {
 
@@ -1698,13 +1845,21 @@
       }
 
 
-      document.getElementById("businessName").value =
+      document.getElementById(
+        "businessName"
+      ).value =
         business.name || "";
 
-      document.getElementById("businessCurrency").value =
+
+      document.getElementById(
+        "businessCurrency"
+      ).value =
         business.currency || "Q";
 
-      document.getElementById("businessColor").value =
+
+      document.getElementById(
+        "businessColor"
+      ).value =
         business.color || "#333333";
 
 
@@ -1718,19 +1873,23 @@
 
       business.name =
         document
-          .getElementById("businessName")
+          .getElementById(
+            "businessName"
+          )
           .value
           .trim();
 
+
       business.color =
-        document
-          .getElementById("businessColor")
-          .value;
+        document.getElementById(
+          "businessColor"
+        ).value;
+
 
       business.currency =
-        document
-          .getElementById("businessCurrency")
-          .value;
+        document.getElementById(
+          "businessCurrency"
+        ).value;
 
 
       localStorage.setItem(
@@ -1743,21 +1902,25 @@
 
       applyPrimaryColor();
 
-      alert("✅ Datos del negocio guardados.");
+      alert(
+        "✅ Datos del negocio guardados."
+      );
     }
 
 
     function saveCurrency() {
 
       business.currency =
-        document
-          .getElementById("businessCurrency")
-          .value;
+        document.getElementById(
+          "businessCurrency"
+        ).value;
+
 
       localStorage.setItem(
         BUSINESS_KEY,
         JSON.stringify(business)
       );
+
 
       updateBusinessUI();
 
@@ -1770,13 +1933,17 @@
       const name =
         business.name || "Dulce Costeo";
 
+
       document.getElementById(
         "headerBusinessName"
-      ).textContent = name;
+      ).textContent =
+        name;
+
 
       document.getElementById(
         "footerBusinessName"
-      ).textContent = name;
+      ).textContent =
+        name;
 
 
       document.getElementById(
@@ -1820,12 +1987,19 @@
     }
 
 
-    function updateLogo(elementId, logo) {
+    function updateLogo(
+      elementId,
+      logo
+    ) {
 
       const element =
-        document.getElementById(elementId);
+        document.getElementById(
+          elementId
+        );
+
 
       if (!element) return;
+
 
       if (logo) {
 
@@ -1834,7 +2008,8 @@
 
       } else {
 
-        element.textContent = "🧁";
+        element.textContent =
+          "🧁";
 
       }
     }
@@ -1845,7 +2020,9 @@
       const file =
         event.target.files[0];
 
+
       if (!file) return;
+
 
       if (!file.type.startsWith("image/")) {
 
@@ -1861,19 +2038,22 @@
         new FileReader();
 
 
-      reader.onload = function(e) {
+      reader.onload =
+        function(e) {
 
-        business.logo =
-          e.target.result;
+          business.logo =
+            e.target.result;
 
-        updateBusinessUI();
 
-        localStorage.setItem(
-          BUSINESS_KEY,
-          JSON.stringify(business)
-        );
+          updateBusinessUI();
 
-      };
+
+          localStorage.setItem(
+            BUSINESS_KEY,
+            JSON.stringify(business)
+          );
+
+        };
 
 
       reader.readAsDataURL(file);
@@ -1898,13 +2078,18 @@
               ingredient.name || "",
 
             price:
-              Number(ingredient.price) || 0,
+              Number(
+                ingredient.price
+              ) || 0,
 
             quantity:
-              Number(ingredient.quantity) || 0,
+              Number(
+                ingredient.quantity
+              ) || 0,
 
             unit:
-              ingredient.unit || "unidad"
+              ingredient.unit ||
+              "unidad"
 
           })
         );
@@ -1915,9 +2100,12 @@
 
       ingredients =
         safeParse(
-          localStorage.getItem(INGREDIENTS_KEY),
+          localStorage.getItem(
+            INGREDIENTS_KEY
+          ),
           []
         );
+
 
       normalizeIngredients();
 
@@ -1936,39 +2124,150 @@
     }
 
 
-    function addIngredient() {
+    /* NUEVO INGREDIENTE */
 
-      const ingredient = {
+    function saveNewIngredient() {
 
-        id: generateId("ingredient"),
-
-        name: "",
-
-        price: 0,
-
-        quantity: 1,
-
-        unit: "unidad"
-
-      };
+      const name =
+        document
+          .getElementById(
+            "newIngredientName"
+          )
+          .value
+          .trim();
 
 
-      ingredients.push(ingredient);
+      const price =
+        Number(
+          document.getElementById(
+            "newIngredientPrice"
+          ).value
+        );
+
+
+      const quantity =
+        Number(
+          document.getElementById(
+            "newIngredientQuantity"
+          ).value
+        );
+
+
+      const unit =
+        document.getElementById(
+          "newIngredientUnit"
+        ).value;
+
+
+      if (!name) {
+
+        alert(
+          "Escribe el nombre del ingrediente."
+        );
+
+        return;
+      }
+
+
+      if (
+        !Number.isFinite(price) ||
+        price < 0
+      ) {
+
+        alert(
+          "Ingresa un precio válido."
+        );
+
+        return;
+      }
+
+
+      if (
+        !Number.isFinite(quantity) ||
+        quantity <= 0
+      ) {
+
+        alert(
+          "La cantidad debe ser mayor que 0."
+        );
+
+        return;
+      }
+
+
+      ingredients.push({
+
+        id: generateId(
+          "ingredient"
+        ),
+
+        name,
+
+        price,
+
+        quantity,
+
+        unit
+
+      });
+
 
       saveIngredients();
 
-      renderIngredients(
-        ingredient.id
+      clearNewIngredientFields();
+
+      renderIngredients();
+
+      renderRecipeIngredientRows();
+
+      renderCostRecipeOptions();
+
+      calculateCost();
+
+      alert(
+        "✅ Ingrediente guardado."
       );
     }
 
 
-    function renderIngredients(editingId = null) {
+    function clearNewIngredientFields() {
+
+      document.getElementById(
+        "newIngredientName"
+      ).value = "";
+
+
+      document.getElementById(
+        "newIngredientPrice"
+      ).value = "";
+
+
+      document.getElementById(
+        "newIngredientQuantity"
+      ).value = "";
+
+
+      document.getElementById(
+        "newIngredientUnit"
+      ).value =
+        "lb";
+
+
+      document.getElementById(
+        "newIngredientName"
+      ).focus();
+    }
+
+
+    function renderIngredients(
+      editingId = null
+    ) {
 
       const container =
         document.getElementById(
           "ingredientList"
         );
+
 
       if (!ingredients.length) {
 
@@ -1982,129 +2281,137 @@
       }
 
 
+      const sortedIngredients =
+        sortByName(ingredients);
+
+
       container.innerHTML =
-        ingredients.map(
-          ingredient => {
+        sortedIngredients
+          .map(
+            ingredient => {
 
-            const editing =
-              ingredient.id === editingId;
+              const editing =
+                ingredient.id === editingId;
 
-            return `
 
-              <div
-                class="ingredient-row"
-                data-id="${ingredient.id}"
-              >
+              return `
 
-                <div class="ingredient-fields">
+                <div
+                  class="ingredient-row"
+                  data-id="${ingredient.id}"
+                >
 
-                  <div class="form-group">
-                    <label>Ingrediente</label>
+                  <div class="ingredient-fields">
 
-                    <input
-                      class="ingredient-name"
-                      type="text"
-                      value="${escapeHtmlAttribute(ingredient.name)}"
-                      ${editing ? "" : "disabled"}
-                      placeholder="Ej. Harina"
-                    />
+                    <div class="form-group">
+                      <label>Ingrediente</label>
+
+                      <input
+                        class="ingredient-name"
+                        type="text"
+                        value="${escapeHtmlAttribute(ingredient.name)}"
+                        ${editing ? "" : "disabled"}
+                        placeholder="Ej. Harina"
+                      />
+                    </div>
+
+
+                    <div class="form-group">
+                      <label>Precio</label>
+
+                      <input
+                        class="ingredient-price"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        inputmode="decimal"
+                        value="${ingredient.price}"
+                        ${editing ? "" : "disabled"}
+                      />
+                    </div>
+
+
+                    <div class="form-group">
+                      <label>Cantidad</label>
+
+                      <input
+                        class="ingredient-quantity"
+                        type="number"
+                        min="0.001"
+                        step="0.001"
+                        inputmode="decimal"
+                        value="${ingredient.quantity}"
+                        ${editing ? "" : "disabled"}
+                      />
+                    </div>
+
+
+                    <div class="form-group">
+                      <label>Unidad de compra</label>
+
+                      <select
+                        class="ingredient-unit"
+                        ${editing ? "" : "disabled"}
+                      >
+
+                        ${unitOptions(
+                          ingredient.unit
+                        )}
+
+                      </select>
+                    </div>
+
                   </div>
 
 
-                  <div class="form-group">
-                    <label>Precio</label>
+                  <div class="ingredient-actions">
 
-                    <input
-                      class="ingredient-price"
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      inputmode="decimal"
-                      value="${ingredient.price}"
-                      ${editing ? "" : "disabled"}
-                    />
-                  </div>
+                    ${
+                      editing
+                      ?
+                      `
+                        <button
+                          class="btn btn-success btn-small"
+                          onclick="saveIngredient('${ingredient.id}')"
+                        >
+                          💾 Guardar
+                        </button>
+
+                        <button
+                          class="btn btn-secondary btn-small"
+                          onclick="cancelIngredientEdit('${ingredient.id}')"
+                        >
+                          Cancelar
+                        </button>
+                      `
+                      :
+                      `
+                        <button
+                          class="btn btn-secondary btn-small"
+                          onclick="editIngredient('${ingredient.id}')"
+                        >
+                          ✏️ Editar
+                        </button>
+                      `
+                    }
 
 
-                  <div class="form-group">
-                    <label>Cantidad</label>
-
-                    <input
-                      class="ingredient-quantity"
-                      type="number"
-                      min="0.001"
-                      step="0.001"
-                      inputmode="decimal"
-                      value="${ingredient.quantity}"
-                      ${editing ? "" : "disabled"}
-                    />
-                  </div>
-
-
-                  <div class="form-group">
-                    <label>Unidad de compra</label>
-
-                    <select
-                      class="ingredient-unit"
-                      ${editing ? "" : "disabled"}
+                    <button
+                      class="btn btn-danger btn-small"
+                      onclick="deleteIngredient('${ingredient.id}')"
                     >
+                      🗑️ Eliminar
+                    </button>
 
-                      ${unitOptions(
-                        ingredient.unit
-                      )}
-
-                    </select>
                   </div>
 
                 </div>
 
+              `;
 
-                <div class="ingredient-actions">
-
-                  ${
-                    editing
-                    ?
-                    `
-                      <button
-                        class="btn btn-success btn-small"
-                        onclick="saveIngredient('${ingredient.id}')"
-                      >
-                        💾 Guardar
-                      </button>
-
-                      <button
-                        class="btn btn-secondary btn-small"
-                        onclick="cancelIngredientEdit('${ingredient.id}')"
-                      >
-                        Cancelar
-                      </button>
-                    `
-                    :
-                    `
-                      <button
-                        class="btn btn-secondary btn-small"
-                        onclick="editIngredient('${ingredient.id}')"
-                      >
-                        ✏️ Editar
-                      </button>
-                    `
-                  }
-
-
-                  <button
-                    class="btn btn-danger btn-small"
-                    onclick="deleteIngredient('${ingredient.id}')"
-                  >
-                    🗑️ Eliminar
-                  </button>
-
-                </div>
-
-              </div>
-
-            `;
-          }
-        ).join("");
+            }
+          )
+          .join("");
     }
 
 
@@ -2112,10 +2419,12 @@
 
       renderIngredients(id);
 
+
       const row =
         document.querySelector(
           `.ingredient-row[data-id="${id}"]`
         );
+
 
       if (row) {
 
@@ -2124,34 +2433,16 @@
             ".ingredient-name"
           );
 
+
         if (input) {
           input.focus();
         }
+
       }
     }
 
 
     function cancelIngredientEdit(id) {
-
-      const ingredient =
-        ingredients.find(
-          item => item.id === id
-        );
-
-      if (
-        ingredient &&
-        !ingredient.name &&
-        Number(ingredient.price) === 0
-      ) {
-
-        ingredients =
-          ingredients.filter(
-            item => item.id !== id
-          );
-
-        saveIngredients();
-
-      }
 
       renderIngredients();
     }
@@ -2164,6 +2455,7 @@
           `.ingredient-row[data-id="${id}"]`
         );
 
+
       if (!row) return;
 
 
@@ -2172,6 +2464,7 @@
           ".ingredient-name"
         ).value.trim();
 
+
       const price =
         Number(
           row.querySelector(
@@ -2179,12 +2472,14 @@
           ).value
         );
 
+
       const quantity =
         Number(
           row.querySelector(
             ".ingredient-quantity"
           ).value
         );
+
 
       const unit =
         row.querySelector(
@@ -2230,7 +2525,8 @@
 
       const index =
         ingredients.findIndex(
-          item => item.id === id
+          item =>
+            item.id === id
         );
 
 
@@ -2256,11 +2552,22 @@
 
       renderIngredients();
 
+      /*
+        IMPORTANTE:
+        Las recetas conservan el ingredientId.
+        Por eso, al cambiar precio, cantidad o unidad
+        del ingrediente, el costeo se actualiza automáticamente.
+      */
+
       renderRecipeIngredientRows();
 
       renderCostRecipeOptions();
 
       calculateCost();
+
+      alert(
+        "✅ Ingrediente actualizado."
+      );
     }
 
 
@@ -2268,23 +2575,74 @@
 
       const ingredient =
         ingredients.find(
-          item => item.id === id
+          item =>
+            item.id === id
         );
+
 
       if (!ingredient) return;
 
 
-      const confirmed =
-        confirm(
-          `¿Eliminar "${ingredient.name || "este ingrediente"}"?`
+      const affectedRecipes =
+        recipes.filter(
+          recipe =>
+            recipe.ingredients.some(
+              recipeIngredient =>
+                recipeIngredient.ingredientId === id ||
+                (
+                  recipeIngredient.ingredient &&
+                  recipeIngredient.ingredient ===
+                    ingredient.name
+                )
+            )
         );
 
-      if (!confirmed) return;
+
+      if (affectedRecipes.length) {
+
+        const recipeNames =
+          affectedRecipes
+            .map(
+              recipe =>
+                `• ${recipe.name}`
+            )
+            .join("\n");
+
+
+        const confirmed =
+          confirm(
+            `⚠️ Este ingrediente está siendo utilizado en una o más recetas.\n\n` +
+            `Recetas afectadas:\n${recipeNames}\n\n` +
+            `Si eliminas "${ingredient.name}", ` +
+            `el costeo de esas recetas quedará incompleto ` +
+            `y no podremos calcular un precio exacto.\n\n` +
+            `¿Deseas eliminarlo de todas formas?`
+          );
+
+
+        if (!confirmed) {
+          return;
+        }
+
+      } else {
+
+        const confirmed =
+          confirm(
+            `¿Eliminar "${ingredient.name}"?`
+          );
+
+
+        if (!confirmed) {
+          return;
+        }
+
+      }
 
 
       ingredients =
         ingredients.filter(
-          item => item.id !== id
+          item =>
+            item.id !== id
         );
 
 
@@ -2294,31 +2652,60 @@
 
       renderRecipeIngredientRows();
 
+      renderCostRecipeOptions();
+
       calculateCost();
+
+
+      if (affectedRecipes.length) {
+
+        alert(
+          `⚠️ El ingrediente fue eliminado.\n\n` +
+          `El costeo de estas recetas quedó incompleto:\n` +
+          affectedRecipes
+            .map(
+              recipe =>
+                `• ${recipe.name}`
+            )
+            .join("\n") +
+          `\n\nDebes corregirlas agregando nuevamente el ingrediente o reemplazándolo.`
+        );
+
+      }
+
     }
 
 
     function unitOptions(selected) {
 
       const units = [
+
         ["lb", "Libra (lb)"],
+
         ["kg", "Kilogramo (kg)"],
+
         ["g", "Gramo (g)"],
+
         ["oz", "Onza (oz)"],
+
         ["unidad", "Unidad"],
+
         ["docena", "Docena"]
+
       ];
 
 
-      return units.map(
-        ([value, label]) =>
-          `<option
-            value="${value}"
-            ${value === selected ? "selected" : ""}
-          >
-            ${label}
-          </option>`
-      ).join("");
+      return units
+        .map(
+          ([value, label]) =>
+            `<option
+              value="${value}"
+              ${value === selected ? "selected" : ""}
+            >
+              ${label}
+            </option>`
+        )
+        .join("");
     }
 
 
@@ -2346,10 +2733,17 @@
                 1
               ),
 
+            preparation:
+              recipe.preparation ||
+              recipe.preparacion ||
+              "",
+
             ingredients:
-              Array.isArray(recipe.ingredients)
-                ? recipe.ingredients
-                : []
+              Array.isArray(
+                recipe.ingredients
+              )
+              ? recipe.ingredients
+              : []
 
           })
         );
@@ -2360,9 +2754,12 @@
 
       recipes =
         safeParse(
-          localStorage.getItem(RECIPES_KEY),
+          localStorage.getItem(
+            RECIPES_KEY
+          ),
           []
         );
+
 
       normalizeRecipes();
 
@@ -2397,19 +2794,28 @@
           "Primero agrega al menos un ingrediente en la sección Ingredientes."
         );
 
+
         showSection(
           "ingredientsSection"
         );
+
 
         return;
       }
 
 
       const row =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       row.className =
         "recipe-ingredient-row";
+
+
+      const sortedIngredients =
+        sortByName(ingredients);
 
 
       row.innerHTML = `
@@ -2424,17 +2830,19 @@
               Selecciona un ingrediente
             </option>
 
-            ${ingredients.map(
-              ingredient =>
-                `<option
-                  value="${ingredient.id}"
-                  ${ingredient.id === ingredientId ? "selected" : ""}
-                >
-                  ${escapeHtml(
-                    ingredient.name
-                  )}
-                </option>`
-            ).join("")}
+            ${sortedIngredients
+              .map(
+                ingredient =>
+                  `<option
+                    value="${ingredient.id}"
+                    ${ingredient.id === ingredientId ? "selected" : ""}
+                  >
+                    ${escapeHtml(
+                      ingredient.name
+                    )}
+                  </option>`
+              )
+              .join("")}
 
           </select>
 
@@ -2495,7 +2903,12 @@
           "recipeIngredients"
         );
 
+
+      if (!container) return;
+
+
       container.innerHTML = "";
+
 
       addRecipeIngredientRow();
     }
@@ -2512,58 +2925,64 @@
       const result = [];
 
 
-      rows.forEach(row => {
+      rows.forEach(
+        row => {
 
-        const ingredientId =
-          row.querySelector(
-            ".recipe-ingredient"
-          ).value;
-
-        const quantity =
-          Number(
+          const ingredientId =
             row.querySelector(
-              ".recipe-quantity"
-            ).value
-          );
-
-        const unit =
-          row.querySelector(
-            ".recipe-unit"
-          ).value;
+              ".recipe-ingredient"
+            ).value;
 
 
-        if (
-          ingredientId &&
-          Number.isFinite(quantity) &&
-          quantity > 0
-        ) {
-
-          const ingredient =
-            ingredients.find(
-              item =>
-                item.id === ingredientId
+          const quantity =
+            Number(
+              row.querySelector(
+                ".recipe-quantity"
+              ).value
             );
 
 
-          if (ingredient) {
+          const unit =
+            row.querySelector(
+              ".recipe-unit"
+            ).value;
 
-            result.push({
 
-              ingredientId,
+          if (
+            ingredientId &&
+            Number.isFinite(quantity) &&
+            quantity > 0
+          ) {
 
-              ingredient:
-                ingredient.name,
+            const ingredient =
+              ingredients.find(
+                item =>
+                  item.id ===
+                  ingredientId
+              );
 
-              quantity,
 
-              unit
+            if (ingredient) {
 
-            });
+              result.push({
+
+                ingredientId,
+
+                ingredient:
+                  ingredient.name,
+
+                quantity,
+
+                unit
+
+              });
+
+            }
 
           }
-        }
 
-      });
+        }
+      );
 
 
       return result;
@@ -2574,8 +2993,12 @@
 
       const name =
         document
-          .getElementById("recipeName")
-          .value.trim();
+          .getElementById(
+            "recipeName"
+          )
+          .value
+          .trim();
+
 
       const recipeYield =
         Number(
@@ -2583,6 +3006,16 @@
             "recipeYield"
           ).value
         );
+
+
+      const preparation =
+        document
+          .getElementById(
+            "recipePreparation"
+          )
+          .value
+          .trim();
+
 
       const recipeIngredients =
         getRecipeIngredientData();
@@ -2625,7 +3058,10 @@
 
         name,
 
-        yield: recipeYield,
+        yield:
+          recipeYield,
+
+        preparation,
 
         ingredients:
           recipeIngredients
@@ -2633,12 +3069,19 @@
       };
 
 
+      const wasEditing =
+        Boolean(
+          editingRecipeId
+        );
+
+
       if (editingRecipeId) {
 
         const index =
           recipes.findIndex(
             recipe =>
-              recipe.id === editingRecipeId
+              recipe.id ===
+              editingRecipeId
           );
 
 
@@ -2658,7 +3101,10 @@
 
         recipes.push({
 
-          id: generateId("recipe"),
+          id:
+            generateId(
+              "recipe"
+            ),
 
           ...recipeData
 
@@ -2675,8 +3121,9 @@
 
       clearRecipeFields();
 
+
       alert(
-        editingRecipeId
+        wasEditing
           ? "✅ Receta actualizada."
           : "✅ Receta guardada."
       );
@@ -2687,8 +3134,10 @@
 
       const recipe =
         recipes.find(
-          item => item.id === id
+          item =>
+            item.id === id
         );
+
 
       if (!recipe) return;
 
@@ -2708,10 +3157,18 @@
         recipe.yield;
 
 
+      document.getElementById(
+        "recipePreparation"
+      ).value =
+        recipe.preparation ||
+        "";
+
+
       const container =
         document.getElementById(
           "recipeIngredients"
         );
+
 
       container.innerHTML = "";
 
@@ -2720,21 +3177,30 @@
         item => {
 
           let ingredientId =
-            item.ingredientId || "";
+            item.ingredientId ||
+            "";
 
 
-          if (!ingredientId && item.ingredient) {
+          if (
+            !ingredientId &&
+            item.ingredient
+          ) {
 
             const found =
               ingredients.find(
                 ingredient =>
-                  ingredient.name === item.ingredient
+                  ingredient.name ===
+                  item.ingredient
               );
 
+
             if (found) {
+
               ingredientId =
                 found.id;
+
             }
+
           }
 
 
@@ -2748,8 +3214,12 @@
       );
 
 
-      if (!recipe.ingredients.length) {
+      if (
+        !recipe.ingredients.length
+      ) {
+
         addRecipeIngredientRow();
+
       }
 
 
@@ -2793,6 +3263,11 @@
 
 
       document.getElementById(
+        "recipePreparation"
+      ).value = "";
+
+
+      document.getElementById(
         "recipeFormTitle"
       ).textContent =
         "🎂 Nueva receta";
@@ -2812,8 +3287,10 @@
 
       const recipe =
         recipes.find(
-          item => item.id === id
+          item =>
+            item.id === id
         );
+
 
       if (!recipe) return;
 
@@ -2823,13 +3300,16 @@
           `¿Eliminar la receta "${recipe.name}"?`
         )
       ) {
+
         return;
+
       }
 
 
       recipes =
         recipes.filter(
-          item => item.id !== id
+          item =>
+            item.id !== id
         );
 
 
@@ -2839,9 +3319,15 @@
 
       renderCostRecipeOptions();
 
-      if (editingRecipeId === id) {
+
+      if (
+        editingRecipeId === id
+      ) {
+
         clearRecipeFields();
+
       }
+
     }
 
 
@@ -2864,53 +3350,96 @@
       }
 
 
+      const sortedRecipes =
+        sortByName(recipes);
+
+
       container.innerHTML =
-        recipes.map(
-          recipe => `
+        sortedRecipes
+          .map(
+            recipe => {
 
-            <div class="saved-recipe">
+              const ingredientCount =
+                recipe.ingredients.length;
 
-              <div class="saved-recipe-header">
 
-                <div>
+              const ingredientText =
+                ingredientCount === 1
+                  ? "ingrediente"
+                  : "ingredientes";
 
-                  <div class="saved-recipe-name">
-                    ${escapeHtml(recipe.name)}
+
+              return `
+
+                <div class="saved-recipe">
+
+                  <div class="saved-recipe-header">
+
+                    <div>
+
+                      <div class="saved-recipe-name">
+                        ${escapeHtml(
+                          recipe.name
+                        )}
+                      </div>
+
+                      <div class="saved-recipe-info">
+                        Rinde ${recipe.yield}
+                        ${
+                          recipe.yield == 1
+                            ? "unidad"
+                            : "unidades"
+                        }
+                        · ${ingredientCount}
+                        ${ingredientText}
+                      </div>
+
+                    </div>
+
+
+                    <div class="saved-recipe-actions">
+
+                      <button
+                        class="btn btn-secondary btn-small"
+                        onclick="loadRecipe('${recipe.id}')"
+                      >
+                        ✏️ Editar
+                      </button>
+
+                      <button
+                        class="btn btn-danger btn-small"
+                        onclick="deleteRecipe('${recipe.id}')"
+                      >
+                        🗑️ Eliminar
+                      </button>
+
+                    </div>
+
                   </div>
 
-                  <div class="saved-recipe-info">
-                    Rinde ${recipe.yield}
-                    ${recipe.yield == 1 ? "unidad" : "unidades"}
-                    · ${recipe.ingredients.length} ingredientes
-                  </div>
+
+                  ${
+                    recipe.preparation
+                    ?
+                    `
+                      <div class="saved-recipe-preparation">
+                        <strong>👩‍🍳 Preparación:</strong><br>
+                        ${escapeHtml(
+                          recipe.preparation
+                        )}
+                      </div>
+                    `
+                    :
+                    ""
+                  }
 
                 </div>
 
+              `;
 
-                <div class="saved-recipe-actions">
-
-                  <button
-                    class="btn btn-secondary btn-small"
-                    onclick="loadRecipe('${recipe.id}')"
-                  >
-                    ✏️ Editar
-                  </button>
-
-                  <button
-                    class="btn btn-danger btn-small"
-                    onclick="deleteRecipe('${recipe.id}')"
-                  >
-                    🗑️ Eliminar
-                  </button>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          `
-        ).join("");
+            }
+          )
+          .join("");
     }
 
 
@@ -2925,6 +3454,7 @@
           "costRecipe"
         );
 
+
       if (!select) return;
 
 
@@ -2932,16 +3462,26 @@
         select.value;
 
 
+      const sortedRecipes =
+        sortByName(recipes);
+
+
       select.innerHTML =
         `<option value="">
           Selecciona una receta
         </option>` +
-        recipes.map(
-          recipe =>
-            `<option value="${recipe.id}">
-              ${escapeHtml(recipe.name)}
-            </option>`
-        ).join("");
+        sortedRecipes
+          .map(
+            recipe =>
+              `<option
+                value="${recipe.id}"
+              >
+                ${escapeHtml(
+                  recipe.name
+                )}
+              </option>`
+          )
+          .join("");
 
 
       if (
@@ -2950,37 +3490,50 @@
             recipe.id === current
         )
       ) {
-        select.value = current;
+
+        select.value =
+          current;
+
       }
+
     }
 
 
     function getUnitCategory(unit) {
 
       const weightUnits = [
+
         "g",
         "kg",
         "lb",
         "oz"
+
       ];
 
+
       const countUnits = [
+
         "unidad",
         "docena"
+
       ];
 
 
       if (
         weightUnits.includes(unit)
       ) {
+
         return "weight";
+
       }
 
 
       if (
         countUnits.includes(unit)
       ) {
+
         return "count";
+
       }
 
 
@@ -3015,7 +3568,9 @@
 
         default:
           return quantity;
+
       }
+
     }
 
 
@@ -3049,9 +3604,12 @@
       if (!ingredient) {
 
         return {
+
           cost: 0,
+
           warning:
             `No se encontró el ingrediente "${recipeIngredient.ingredient || ""}".`
+
         };
 
       }
@@ -3062,6 +3620,7 @@
           ingredient.unit
         );
 
+
       const recipeCategory =
         getUnitCategory(
           recipeIngredient.unit
@@ -3069,14 +3628,17 @@
 
 
       if (
-        purchaseCategory !== recipeCategory
+        purchaseCategory !==
+        recipeCategory
       ) {
 
         return {
+
           cost: 0,
 
           warning:
             `"${ingredient.name}" está comprado en ${ingredient.unit}, pero en la receta está usado en ${recipeIngredient.unit}. Revisa las unidades.`
+
         };
 
       }
@@ -3101,9 +3663,12 @@
       ) {
 
         return {
+
           cost: 0,
+
           warning:
             `La cantidad de compra de "${ingredient.name}" no es válida.`
+
         };
 
       }
@@ -3120,16 +3685,19 @@
           costPerBaseUnit *
           usedBaseQuantity,
 
-        warning: null
+        warning:
+          null
 
       };
+
     }
 
 
     function money(value) {
 
       const symbol =
-        business.currency || "Q";
+        business.currency ||
+        "Q";
 
 
       return (
@@ -3137,6 +3705,7 @@
         Number(value || 0)
           .toFixed(2)
       );
+
     }
 
 
@@ -3152,6 +3721,7 @@
         document.getElementById(
           "costResult"
         );
+
 
       const warning =
         document.getElementById(
@@ -3183,7 +3753,11 @@
         result.style.display =
           "none";
 
+        warning.style.display =
+          "none";
+
         return;
+
       }
 
 
@@ -3208,13 +3782,48 @@
           if (
             calculation.warning
           ) {
+
             warnings.push(
               calculation.warning
             );
+
           }
 
         }
       );
+
+
+      /*
+        SI HAY ALGÚN PROBLEMA:
+        No mostramos precios ni ganancias como si fueran exactos.
+      */
+
+      if (warnings.length) {
+
+        result.style.display =
+          "none";
+
+
+        warning.innerHTML =
+          `<strong>⚠️ Costeo incompleto</strong><br><br>` +
+          `No podemos mostrar un precio sugerido exacto porque hay un problema con uno o más ingredientes:<br><br>` +
+          warnings
+            .map(
+              item =>
+                `• ${escapeHtml(item)}`
+            )
+            .join("<br>") +
+          `<br><br>` +
+          `Corrige la receta o vuelve a agregar el ingrediente faltante para obtener un costeo exacto.`;
+
+
+        warning.style.display =
+          "block";
+
+
+        return;
+
+      }
 
 
       const packagingPerUnit =
@@ -3266,7 +3875,8 @@
 
 
       const yieldAmount =
-        Number(recipe.yield) || 1;
+        Number(recipe.yield) ||
+        1;
 
 
       const packagingTotal =
@@ -3310,82 +3920,90 @@
       document.getElementById(
         "resultIngredients"
       ).textContent =
-        money(ingredientTotal);
+        money(
+          ingredientTotal
+        );
 
 
       document.getElementById(
         "resultPackaging"
       ).textContent =
-        money(packagingTotal);
+        money(
+          packagingTotal
+        );
 
 
       document.getElementById(
         "resultUtilities"
       ).textContent =
-        money(utilities);
+        money(
+          utilities
+        );
 
 
       document.getElementById(
         "resultLabor"
       ).textContent =
-        money(labor);
+        money(
+          labor
+        );
 
 
       document.getElementById(
         "resultOther"
       ).textContent =
-        money(other);
+        money(
+          other
+        );
 
 
       document.getElementById(
         "resultTotal"
       ).textContent =
-        money(totalCost);
+        money(
+          totalCost
+        );
 
 
       document.getElementById(
         "resultPerUnit"
       ).textContent =
-        money(costPerUnit);
+        money(
+          costPerUnit
+        );
 
 
       document.getElementById(
         "resultSalePrice"
       ).textContent =
-        money(salePrice);
+        money(
+          salePrice
+        );
 
 
       document.getElementById(
         "resultProfitPerUnit"
       ).textContent =
-        money(profitPerUnit);
+        money(
+          profitPerUnit
+        );
 
 
       document.getElementById(
         "resultTotalProfit"
       ).textContent =
-        money(totalProfit);
+        money(
+          totalProfit
+        );
 
 
       result.style.display =
         "block";
 
 
-      if (warnings.length) {
+      warning.style.display =
+        "none";
 
-        warning.innerHTML =
-          "⚠️ " +
-          warnings.join("<br>⚠️ ");
-
-        warning.style.display =
-          "block";
-
-      } else {
-
-        warning.style.display =
-          "none";
-
-      }
     }
 
 
@@ -3395,18 +4013,37 @@
 
     function escapeHtml(value) {
 
-      return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+      return String(
+        value ?? ""
+      )
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
     }
 
 
     function escapeHtmlAttribute(value) {
 
       return escapeHtml(value);
+
     }
 
 
