@@ -2965,19 +2965,29 @@
        AUTHORIZATION
     ========================================================= */
 
-    async function checkCurrentUser() {
+  async function checkCurrentUser() {
 
-  if (checkingUser) return;
+  // Si estamos recuperando contraseña,
+  // nunca debemos entrar a la aplicación.
+  if (passwordRecoveryMode) {
+    showUpdatePassword();
+    return;
+  }
 
-  // No ejecutar la autorización durante recuperación de contraseña
   if (
     window.location.hash.includes(
       "type=recovery"
     )
   ) {
+
+    passwordRecoveryMode =
+      true;
+
     showUpdatePassword();
     return;
   }
+
+  if (checkingUser) return;
 
   checkingUser = true;
 
@@ -2991,18 +3001,24 @@
         .auth
         .getUser();
 
-    // Volver a comprobar porque el estado pudo cambiar
-    // mientras esperábamos la respuesta de Supabase.
+    // Protección contra cambios de estado
+    // mientras Supabase responde.
     if (
+      passwordRecoveryMode ||
       window.location.hash.includes(
         "type=recovery"
       )
     ) {
+
+      passwordRecoveryMode =
+        true;
+
       showUpdatePassword();
       return;
     }
 
     if (error) {
+
       showLanding();
       return;
     }
@@ -3014,6 +3030,7 @@
       !user ||
       !user.email
     ) {
+
       showLanding();
       return;
     }
@@ -3039,12 +3056,17 @@
         )
         .maybeSingle();
 
-    // Volver a comprobar antes de mostrar la aplicación.
+    // Última protección durante recuperación.
     if (
+      passwordRecoveryMode ||
       window.location.hash.includes(
         "type=recovery"
       )
     ) {
+
+      passwordRecoveryMode =
+        true;
+
       showUpdatePassword();
       return;
     }
@@ -3095,12 +3117,8 @@
       authorization.id === 4
     ) {
 
-      // Nunca entrar a la aplicación durante recuperación
-      if (
-        window.location.hash.includes(
-          "type=recovery"
-        )
-      ) {
+      if (passwordRecoveryMode) {
+
         showUpdatePassword();
         return;
       }
@@ -3190,12 +3208,9 @@
       return;
     }
 
-    // Última protección antes de entrar a la aplicación
-    if (
-      window.location.hash.includes(
-        "type=recovery"
-      )
-    ) {
+    // Protección final antes de entrar.
+    if (passwordRecoveryMode) {
+
       showUpdatePassword();
       return;
     }
@@ -3209,11 +3224,8 @@
       error
     );
 
-    if (
-      window.location.hash.includes(
-        "type=recovery"
-      )
-    ) {
+    if (passwordRecoveryMode) {
+
       showUpdatePassword();
       return;
     }
