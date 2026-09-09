@@ -3654,11 +3654,11 @@
     }
 
 
-    /* =========================================================
-       AUTH STATE
-    ========================================================= */
+  /* =========================================================
+   AUTH STATE
+========================================================= */
 
-   supabaseClient
+supabaseClient
   .auth
   .onAuthStateChange(
     (event) => {
@@ -3667,6 +3667,9 @@
         event ===
         "PASSWORD_RECOVERY"
       ) {
+
+        passwordRecoveryMode =
+          true;
 
         showUpdatePassword();
 
@@ -3678,6 +3681,20 @@
         "SIGNED_OUT"
       ) {
 
+        // Si estamos terminando una recuperación,
+        // volvemos al inicio de sesión.
+        if (
+          passwordRecoveryMode
+        ) {
+
+          passwordRecoveryMode =
+            false;
+
+          showLogin();
+
+          return;
+        }
+
         showLanding();
 
         return;
@@ -3688,11 +3705,18 @@
         "SIGNED_IN"
       ) {
 
+        // Durante recuperación jamás
+        // debemos entrar automáticamente
+        // a la aplicación.
         if (
+          passwordRecoveryMode ||
           window.location.hash.includes(
             "type=recovery"
           )
         ) {
+
+          passwordRecoveryMode =
+            true;
 
           showUpdatePassword();
 
@@ -3713,10 +3737,14 @@
       ) {
 
         if (
+          passwordRecoveryMode ||
           window.location.hash.includes(
             "type=recovery"
           )
         ) {
+
+          passwordRecoveryMode =
+            true;
 
           showUpdatePassword();
 
