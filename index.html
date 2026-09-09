@@ -3552,92 +3552,95 @@
        UPDATE PASSWORD
     ========================================================= */
 
-    async function updatePassword() {
+   async function updatePassword() {
 
-      const password =
-        document.getElementById(
-          "newPassword"
-        ).value;
+  const password =
+    document.getElementById(
+      "newPassword"
+    ).value;
 
-      const confirmPassword =
-        document.getElementById(
-          "newPasswordConfirm"
-        ).value;
+  const confirmPassword =
+    document.getElementById(
+      "newPasswordConfirm"
+    ).value;
 
-      if (
-        password.length < 6
-      ) {
+  if (
+    password.length < 6
+  ) {
 
-        showAuthMessage(
-          "updateMessage",
-          "La contraseña debe tener al menos 6 caracteres.",
-          "error"
-        );
+    showAuthMessage(
+      "updateMessage",
+      "La contraseña debe tener al menos 6 caracteres.",
+      "error"
+    );
 
-        return;
-      }
+    return;
+  }
 
-      if (
-        password !==
-        confirmPassword
-      ) {
+  if (
+    password !==
+    confirmPassword
+  ) {
 
-        showAuthMessage(
-          "updateMessage",
-          "Las contraseñas no coinciden.",
-          "error"
-        );
+    showAuthMessage(
+      "updateMessage",
+      "Las contraseñas no coinciden.",
+      "error"
+    );
 
-        return;
-      }
+    return;
+  }
 
-      try {
+  try {
 
-        const {
-          error
-        } =
-          await supabaseClient
-            .auth
-            .updateUser({
-              password
-            });
+    const {
+      error
+    } =
+      await supabaseClient
+        .auth
+        .updateUser({
+          password
+        });
 
-        if (error)
-          throw error;
+    if (error)
+      throw error;
 
-        showAuthMessage(
-          "updateMessage",
-          "¡Contraseña actualizada correctamente! Ahora puedes iniciar sesión.",
-          "success"
-        );
+    showAuthMessage(
+      "updateMessage",
+      "¡Contraseña actualizada correctamente! Ahora puedes iniciar sesión.",
+      "success"
+    );
 
-        setTimeout(
-          async () => {
+    setTimeout(
+      async () => {
 
-            await supabaseClient
-              .auth
-              .signOut();
+        passwordRecoveryMode =
+          false;
 
-            showLogin();
+        await supabaseClient
+          .auth
+          .signOut();
 
-          },
-          1800
-        );
+        showLogin();
 
-      } catch (error) {
+      },
+      1800
+    );
 
-        console.error(
-          "Error actualizando contraseña:",
-          error
-        );
+  } catch (error) {
 
-        showAuthMessage(
-          "updateMessage",
-          "No pudimos actualizar la contraseña. Solicita nuevamente el enlace de recuperación.",
-          "error"
-        );
-      }
-    }
+    console.error(
+      "Error actualizando contraseña:",
+      error
+    );
+
+    showAuthMessage(
+      "updateMessage",
+      "No pudimos actualizar la contraseña. Solicita nuevamente el enlace de recuperación.",
+      "error"
+    );
+  }
+}
 
 
     /* =========================================================
