@@ -2967,206 +2967,265 @@
 
     async function checkCurrentUser() {
 
-      if (checkingUser) return;
+  if (checkingUser) return;
 
-      checkingUser = true;
+  // No ejecutar la autorización durante recuperación de contraseña
+  if (
+    window.location.hash.includes(
+      "type=recovery"
+    )
+  ) {
+    showUpdatePassword();
+    return;
+  }
 
-      try {
+  checkingUser = true;
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient
-            .auth
-            .getUser();
+  try {
 
-        if (error) {
-          showLanding();
-          return;
-        }
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .auth
+        .getUser();
 
-        const user =
-          data.user;
+    // Volver a comprobar porque el estado pudo cambiar
+    // mientras esperábamos la respuesta de Supabase.
+    if (
+      window.location.hash.includes(
+        "type=recovery"
+      )
+    ) {
+      showUpdatePassword();
+      return;
+    }
 
-        if (
-          !user ||
-          !user.email
-        ) {
-          showLanding();
-          return;
-        }
+    if (error) {
+      showLanding();
+      return;
+    }
 
-        const email =
-          user.email
-            .trim()
-            .toLowerCase();
+    const user =
+      data.user;
 
-        const {
-          data: authorization,
-          error:
-            authorizationError
-        } =
-          await supabaseClient
-            .from("usuarios")
-            .select(
-              "id,email,activo,trial_started_at"
-            )
-            .eq(
-              "email",
-              email
-            )
-            .maybeSingle();
+    if (
+      !user ||
+      !user.email
+    ) {
+      showLanding();
+      return;
+    }
 
-        if (authorizationError) {
+    const email =
+      user.email
+        .trim()
+        .toLowerCase();
 
-          console.error(
-            "Error consultando autorización:",
-            authorizationError.message
+    const {
+      data: authorization,
+      error:
+        authorizationError
+    } =
+      await supabaseClient
+        .from("usuarios")
+        .select(
+          "id,email,activo,trial_started_at"
+        )
+        .eq(
+          "email",
+          email
+        )
+        .maybeSingle();
+
+    // Volver a comprobar antes de mostrar la aplicación.
+    if (
+      window.location.hash.includes(
+        "type=recovery"
+      )
+    ) {
+      showUpdatePassword();
+      return;
+    }
+
+    if (authorizationError) {
+
+      console.error(
+        "Error consultando autorización:",
+        authorizationError.message
+      );
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+      showLogin();
+
+      showAuthMessage(
+        "loginMessage",
+        "No pudimos verificar tu autorización. Inténtalo nuevamente.",
+        "error"
+      );
+
+      return;
+    }
+
+    if (
+      !authorization ||
+      authorization.activo !== true
+    ) {
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+      showLogin();
+
+      showAuthMessage(
+        "loginMessage",
+        "Este correo no está autorizado para usar Dulce Costeo.",
+        "error"
+      );
+
+      return;
+    }
+
+    if (
+      authorization.id === 4
+    ) {
+
+      // Nunca entrar a la aplicación durante recuperación
+      if (
+        window.location.hash.includes(
+          "type=recovery"
+        )
+      ) {
+        showUpdatePassword();
+        return;
+      }
+
+      showApp();
+      return;
+    }
+
+    let trialStartedAt =
+      authorization.trial_started_at;
+
+    if (!trialStartedAt) {
+
+      trialStartedAt =
+        new Date()
+          .toISOString();
+
+      const {
+        error: trialError
+      } =
+        await supabaseClient
+          .from("usuarios")
+          .update({
+            trial_started_at:
+              trialStartedAt
+          })
+          .eq(
+            "id",
+            authorization.id
           );
 
-          await supabaseClient
-            .auth
-            .signOut();
-
-          showLogin();
-
-          showAuthMessage(
-            "loginMessage",
-            "No pudimos verificar tu autorización. Inténtalo nuevamente.",
-            "error"
-          );
-
-          return;
-        }
-
-        if (
-          !authorization ||
-          authorization.activo !== true
-        ) {
-
-          await supabaseClient
-            .auth
-            .signOut();
-
-          showLogin();
-
-          showAuthMessage(
-            "loginMessage",
-            "Este correo no está autorizado para usar Dulce Costeo.",
-            "error"
-          );
-
-          return;
-        }
-
-        if (
-          authorization.id === 4
-        ) {
-
-          showApp();
-          return;
-        }
-
-        let trialStartedAt =
-          authorization.trial_started_at;
-
-        if (!trialStartedAt) {
-
-          trialStartedAt =
-            new Date()
-              .toISOString();
-
-          const {
-            error: trialError
-          } =
-            await supabaseClient
-              .from("usuarios")
-              .update({
-                trial_started_at:
-                  trialStartedAt
-              })
-              .eq(
-                "id",
-                authorization.id
-              );
-
-          if (trialError) {
-
-            console.error(
-              "Error iniciando período de prueba:",
-              trialError.message
-            );
-
-            await supabaseClient
-              .auth
-              .signOut();
-
-            showLogin();
-
-            showAuthMessage(
-              "loginMessage",
-              "No pudimos iniciar tu período de prueba. Inténtalo nuevamente.",
-              "error"
-            );
-
-            return;
-          }
-        }
-
-        const trialStart =
-          new Date(
-            trialStartedAt
-          );
-
-        const now =
-          new Date();
-
-        const difference =
-          now.getTime() -
-          trialStart.getTime();
-
-        const daysUsed =
-          difference /
-          (1000 * 60 * 60 * 24);
-
-        if (
-          daysUsed >= 7
-        ) {
-
-          await supabaseClient
-            .auth
-            .signOut();
-
-          showLogin();
-
-          showAuthMessage(
-            "loginMessage",
-            "Tu período de prueba de 7 días ha terminado. Adquiere tu acceso para continuar usando Dulce Costeo.",
-            "error"
-          );
-
-          return;
-        }
-
-        showApp();
-
-      } catch (error) {
+      if (trialError) {
 
         console.error(
-          "Error de autenticación:",
-          error
+          "Error iniciando período de prueba:",
+          trialError.message
         );
 
-        showLanding();
+        await supabaseClient
+          .auth
+          .signOut();
 
-      } finally {
+        showLogin();
 
-        checkingUser =
-          false;
+        showAuthMessage(
+          "loginMessage",
+          "No pudimos iniciar tu período de prueba. Inténtalo nuevamente.",
+          "error"
+        );
+
+        return;
       }
     }
 
+    const trialStart =
+      new Date(
+        trialStartedAt
+      );
+
+    const now =
+      new Date();
+
+    const difference =
+      now.getTime() -
+      trialStart.getTime();
+
+    const daysUsed =
+      difference /
+      (1000 * 60 * 60 * 24);
+
+    if (
+      daysUsed >= 7
+    ) {
+
+      await supabaseClient
+        .auth
+        .signOut();
+
+      showLogin();
+
+      showAuthMessage(
+        "loginMessage",
+        "Tu período de prueba de 7 días ha terminado. Adquiere tu acceso para continuar usando Dulce Costeo.",
+        "error"
+      );
+
+      return;
+    }
+
+    // Última protección antes de entrar a la aplicación
+    if (
+      window.location.hash.includes(
+        "type=recovery"
+      )
+    ) {
+      showUpdatePassword();
+      return;
+    }
+
+    showApp();
+
+  } catch (error) {
+
+    console.error(
+      "Error de autenticación:",
+      error
+    );
+
+    if (
+      window.location.hash.includes(
+        "type=recovery"
+      )
+    ) {
+      showUpdatePassword();
+      return;
+    }
+
+    showLanding();
+
+  } finally {
+
+    checkingUser =
+      false;
+  }
+}
 
     /* =========================================================
        LOGIN
