@@ -5,10 +5,10 @@
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f8f5f2",
-  "theme_color": "#333333",
+  "theme_color": "#8b73c7",
   "icons": [
     {
-      "src": "./dulce%20costeo.png",
+      "src": "./dulce%20icono.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
