@@ -6057,65 +6057,88 @@
        START
     ========================================================= */
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      async () => {
+  document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
 
     const cupcakeTargets = [
-  "loadingIcon",
-  "landingLogo",
-  "loginLogo",
-  "registerLogo",
-  "forgotLogo",
-  "updateLogo",
-  "headerLogo",
-  "previewLogo",
-  "footerLogo"
-];
+      "loadingIcon",
+      "landingLogo",
+      "loginLogo",
+      "registerLogo",
+      "forgotLogo",
+      "updateLogo",
+      "headerLogo",
+      "previewLogo",
+      "footerLogo"
+    ];
 
-        cupcakeTargets.forEach(
-          id => {
+    cupcakeTargets.forEach(
+      id => {
 
-            const element =
-              document.getElementById(
-                id
-              );
-
-            if (element) {
-
-              element.innerHTML =
-                cupcakeSvg();
-            }
-          }
-        );
-
-        document
-          .querySelectorAll(
-            ".password-toggle"
-          )
-          .forEach(
-            button => {
-
-              button.innerHTML =
-                EYE_ICON;
-
-              button.setAttribute(
-                "aria-label",
-                "Mostrar contraseña"
-              );
-
-              button.setAttribute(
-                "title",
-                "Mostrar contraseña"
-              );
-            }
+        const element =
+          document.getElementById(
+            id
           );
 
-        await checkCurrentUser();
+        if (element) {
 
+          element.innerHTML =
+            cupcakeSvg();
+        }
       }
     );
 
+    document
+      .querySelectorAll(
+        ".password-toggle"
+      )
+      .forEach(
+        button => {
+
+          button.innerHTML =
+            EYE_ICON;
+
+          button.setAttribute(
+            "aria-label",
+            "Mostrar contraseña"
+          );
+
+          button.setAttribute(
+            "title",
+            "Mostrar contraseña"
+          );
+        }
+      );
+
+    const {
+      data: {
+        session
+      }
+    } =
+      await supabaseClient
+        .auth
+        .getSession();
+
+    const isRecovery =
+      window.location.hash.includes(
+        "type=recovery"
+      );
+
+    if (
+      session &&
+      isRecovery
+    ) {
+
+      showUpdatePassword();
+
+      return;
+    }
+
+    await checkCurrentUser();
+
+  }
+);
 
     /* =========================================================
        SERVICE WORKER
