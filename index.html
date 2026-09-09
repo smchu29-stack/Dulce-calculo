@@ -3587,46 +3587,88 @@
        AUTH STATE
     ========================================================= */
 
-    supabaseClient
-      .auth
-      .onAuthStateChange(
-        (event) => {
+   supabaseClient
+  .auth
+  .onAuthStateChange(
+    (event) => {
 
-          if (
-            event ===
-            "PASSWORD_RECOVERY"
-          ) {
+      if (
+        event ===
+        "PASSWORD_RECOVERY"
+      ) {
 
-            setTimeout(
-              showUpdatePassword,
-              100
-            );
+        setTimeout(
+          () => {
+            showUpdatePassword();
+          },
+          100
+        );
 
-            return;
-          }
+        return;
+      }
 
-          if (
-            event ===
-            "SIGNED_OUT"
-          ) {
+      if (
+        event ===
+        "SIGNED_OUT"
+      ) {
 
-            showLanding();
-            return;
-          }
+        showLanding();
 
-          if (
-            event === "SIGNED_IN" ||
-            event === "INITIAL_SESSION"
-          ) {
+        return;
+      }
 
-            setTimeout(
-              checkCurrentUser,
-              100
-            );
-          }
+      if (
+        event ===
+          "SIGNED_IN"
+      ) {
 
-        }
-      );
+        setTimeout(
+          checkCurrentUser,
+          100
+        );
+
+        return;
+      }
+
+      if (
+        event ===
+          "INITIAL_SESSION"
+      ) {
+
+        setTimeout(
+          async () => {
+
+            const {
+              data: {
+                session
+              }
+            } =
+              await supabaseClient
+                .auth
+                .getSession();
+
+            if (
+              session &&
+              window.location.hash.includes(
+                "type=recovery"
+              )
+            ) {
+
+              showUpdatePassword();
+
+              return;
+            }
+
+            checkCurrentUser();
+
+          },
+          150
+        );
+
+      }
+
+    }
+  );
 
 
     /* =========================================================
