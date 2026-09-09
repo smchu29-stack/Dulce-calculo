@@ -3597,12 +3597,7 @@
         "PASSWORD_RECOVERY"
       ) {
 
-        setTimeout(
-          () => {
-            showUpdatePassword();
-          },
-          100
-        );
+        showUpdatePassword();
 
         return;
       }
@@ -3619,8 +3614,19 @@
 
       if (
         event ===
-          "SIGNED_IN"
+        "SIGNED_IN"
       ) {
+
+        if (
+          window.location.hash.includes(
+            "type=recovery"
+          )
+        ) {
+
+          showUpdatePassword();
+
+          return;
+        }
 
         setTimeout(
           checkCurrentUser,
@@ -3632,37 +3638,23 @@
 
       if (
         event ===
-          "INITIAL_SESSION"
+        "INITIAL_SESSION"
       ) {
 
+        if (
+          window.location.hash.includes(
+            "type=recovery"
+          )
+        ) {
+
+          showUpdatePassword();
+
+          return;
+        }
+
         setTimeout(
-          async () => {
-
-            const {
-              data: {
-                session
-              }
-            } =
-              await supabaseClient
-                .auth
-                .getSession();
-
-            if (
-              session &&
-              window.location.hash.includes(
-                "type=recovery"
-              )
-            ) {
-
-              showUpdatePassword();
-
-              return;
-            }
-
-            checkCurrentUser();
-
-          },
-          150
+          checkCurrentUser,
+          100
         );
 
       }
